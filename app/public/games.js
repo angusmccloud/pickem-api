@@ -2,7 +2,7 @@
 const AWS = require('aws-sdk');
 AWS.config.setPromisesDependency(require('bluebird'));
 
-const getUserId = require('../functions/getUserId/getUserId');
+const getUserId = require('../utils/getUserId/getUserId');
 
 module.exports.createGame = async (event, context, callback) => {
     /** Immediate response for WarmUP plugin so things don't keep running */
