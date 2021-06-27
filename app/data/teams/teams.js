@@ -1,4 +1,4 @@
-const teamsInfo = async () => {
+const teamsInfo = () => {
   const teams = [
     {teamId: 1, cityName: 'Buffalo',divisionName: 'AFC East', teamName: 'Bills', imageUrl: 'https://google.com/something.png'},
     {teamId: 2, cityName: 'Miami',divisionName: 'AFC East', teamName: 'Dolphins', imageUrl: 'https://google.com/something.png'},
