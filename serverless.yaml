@@ -1,0 +1,213 @@
+service: pickem
+
+frameworkVersion: ">=1.1.0 <2.0.0"
+
+plugins:
+  - serverless-plugin-warmup
+  - serverless-dotenv-plugin
+
+provider:
+  name: aws
+  runtime: nodejs14.x
+  stage: ${env:stage, 'dev'}
+  region: us-east-1
+  environment:
+    PARTICIPANTS_TABLE: ${self:service}-${opt:stage, self:provider.stage}-participants
+    GAMES_TABLE: ${self:service}-${opt:stage, self:provider.stage}-games
+    PICKS_TABLE: ${self:service}-${opt:stage, self:provider.stage}-picks
+
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - dynamodb:Query
+        - dynamodb:Scan
+        - dynamodb:DeleteItem
+        - dynamodb:UpdateItem
+        - dynamodb:GetItem
+        - dynamodb:PutItem
+        - lambda:InvokeFunction
+        - "sqs:SendMessage"
+        - "sqs:GetQueueUrl"
+      Resource: "*"
+
+functions:
+  testerFunction:
+    handler: app/private/tester.tester
+    description: Used for testing functions
+  getStandings:
+    warmup: ${env:preWarm}
+    prewarm: ${env:preWarm}
+    handler: app/public/standings.getRegularSeason
+    description: Regular Season Standings
+    events:
+      - http:
+          path: standings
+          method: get
+  getStandingsByWeek:
+    warmup: ${env:preWarm}
+    prewarm: ${env:preWarm}
+    handler: app/public/standings.getStandingsByWeek
+    description: Standings by Week
+    events:
+      - http:
+          path: standings/{weekNumber}
+          method: get
+  getStandingsPlayoffs:
+    warmup: ${env:preWarm}
+    prewarm: ${env:preWarm}
+    handler: app/public/standings.getPlayoffs
+    description: Playoff Standings
+    events:
+      - http:
+          path: standings/playoffs
+          method: get
+  getPicksOneWeekAllPlayers:
+    warmup: ${env:preWarm}
+    prewarm: ${env:preWarm}
+    handler: app/public/picks.getPicksByWeek
+    description: All Players Picks, One Week
+    events:
+      - http:
+          path: picks/all/{weekNumber}
+          method: get
+  getPicksOneWeekOnePlayer:
+    warmup: ${env:preWarm}
+    prewarm: ${env:preWarm}
+    handler: app/public/picks.getPicksByWeekByPlayer
+    description: One Player Picks, One Week
+    events:
+      - http:
+          path: picks/{weekNumber}
+          method: get
+  getPicksAllWeeksOnePlayer:
+    warmup: ${env:preWarm}
+    prewarm: ${env:preWarm}
+    handler: app/public/picks.getPicksByPlayer
+    description: One Player Picks, All Weeks
+    events:
+      - http:
+          path: picks
+          method: get
+  setPick:
+    warmup: ${env:preWarm}
+    prewarm: ${env:preWarm}
+    handler: app/public/picks.updatePick
+    description: Set pick for one week
+    events:
+      - http:
+          path: picks
+          method: put
+  createGame:
+    warmup: ${env:preWarm}
+    prewarm: ${env:preWarm}
+    handler: app/public/games.createGame
+    description: Create Game
+    events:
+      - http:
+          path: games/createGame
+          method: post
+  updateGame:
+    warmup: ${env:preWarm}
+    prewarm: ${env:preWarm}
+    handler: app/public/games.updateGame
+    description: Update Game
+    events:
+      - http:
+          path: games/updateGame
+          method: put
+  setWinner:
+    warmup: ${env:preWarm}
+    prewarm: ${env:preWarm}
+    handler: app/public/games.setWinner
+    description: Set Game Winner
+    events:
+      - http:
+          path: games/setWinner
+          method: put
+  getPayoutStructure:
+    warmup: ${env:preWarm}
+    prewarm: ${env:preWarm}
+    handler: app/public/rules.getPayoutStructure
+    description: Get Payout Structure
+    events:
+      - http:
+          path: rules/payoutStructure
+          method: get
+  getCurrentParticipantStatus:
+    warmup: ${env:preWarm}
+    prewarm: ${env:preWarm}
+    handler: app/public/participants.getSingleParticipant
+    description: Get Info on Current Participant
+    events:
+      - http:
+          path: participants
+          method: get
+  getAllParticipants:
+    warmup: ${env:preWarm}
+    prewarm: ${env:preWarm}
+    handler: app/public/participants.getAllParticipants
+    description: Get All Participants
+    events:
+      - http:
+          path: participants/all
+          method: get
+  updateParticipant:
+    warmup: ${env:preWarm}
+    prewarm: ${env:preWarm}
+    handler: app/public/participants.updateParticipant
+    description: Update a Participant
+    events:
+      - http:
+          path: participants/{participantId}
+          method: put
+          
+resources:
+  Resources:
+    ParticipantsDynamoDbTable:
+      Type: 'AWS::DynamoDB::Table'
+      DeletionPolicy: Retain
+      Properties:
+        AttributeDefinitions:
+          -
+            AttributeName: "participantId"
+            AttributeType: "S"
+        KeySchema:
+          -
+            AttributeName: "participantId"
+            KeyType: "HASH"
+        BillingMode: PAY_PER_REQUEST
+        StreamSpecification:
+          StreamViewType: "NEW_AND_OLD_IMAGES"
+        TableName: ${self:provider.environment.PARTICIPANTS_TABLE}
+    GamesDynamoDbTable:
+      Type: 'AWS::DynamoDB::Table'
+      DeletionPolicy: Retain
+      Properties:
+        AttributeDefinitions:
+          -
+            AttributeName: "gameId"
+            AttributeType: "S"
+        KeySchema:
+          -
+            AttributeName: "gameId"
+            KeyType: "HASH"
+        BillingMode: PAY_PER_REQUEST
+        StreamSpecification:
+          StreamViewType: "NEW_AND_OLD_IMAGES"
+        TableName: ${self:provider.environment.GAMES_TABLE}
+    PicksDynamoDbTable:
+      Type: 'AWS::DynamoDB::Table'
+      DeletionPolicy: Retain
+      Properties:
+        AttributeDefinitions:
+          -
+            AttributeName: "pickId"
+            AttributeType: "S"
+        KeySchema:
+          -
+            AttributeName: "pickId"
+            KeyType: "HASH"
+        BillingMode: PAY_PER_REQUEST
+        StreamSpecification:
+          StreamViewType: "NEW_AND_OLD_IMAGES"
+        TableName: ${self:provider.environment.PICKS_TABLE}
