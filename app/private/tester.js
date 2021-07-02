@@ -37,7 +37,32 @@ module.exports.tester = async () => {
   // return await updateGameTime('093aee60-d85c-11eb-910f-1392b5a10712', 2, '2', true, true, dt.getTime());
   // return await updateGameWinner('093aee60-d85c-11eb-910f-1392b5a10712', 7, 15, 20);
   // return await updateGameWinner('8f41eb20-d78b-11eb-a319-1501a078bc2e', 6, 10, 15);
-  // return await updateParticipant('u1235', 1, true, false, true);
-  return await setPick('u1234', 1, '093aee60-d85c-11eb-910f-1392b5a10712', 1, 35);
+  // return await updateParticipant('u1237', 1, true, false, true);
+  // return await setPick('u1234', 1, '093aee60-d85c-11eb-910f-1392b5a10712', 1, 35);
+  // for(let i = 0; i < 10; i++){
+  //   console.log(5
+  // }
+
+
+
+
+  ////
+  // Load up fake picks for a few users
+  ////
+  // const userId = 'u1237';
+  // for(let i = 1; i <= 3; i++) {
+  //   const games = await dynamoScanAllRows(
+  //     process.env.GAMES_TABLE, 
+  //     'gameId, homeTeamId, visitingTeamId, guessPointsFlag', 
+  //     `seasonName = :seasonName AND weekNumber = :weekNumber`, 
+  //     {':seasonName': '2021', ':weekNumber': i}, 
+  //     'pickId');
+  //   for(let ii = 0; ii < games.length; ii++) {
+  //     const game = games[ii];
+  //     const guess = Math.round(Math.random() * 1) === 1 ? game.homeTeamId : game.visitingTeamId;
+  //     setPick(userId, 1, game.gameId, guess, Math.round(Math.random() * 45));
+  //   }
+  // }
+
 
 };
