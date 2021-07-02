@@ -3,7 +3,7 @@ const uuid = require('uuid');
 const dynamoCreateItem = require('../../utils/dynamoCreateItem');
 const teamsInfo = require('../../data/teams/teams');
 
-const createGame = (seasonName, weekNumber, weekName, playoffFlag, guessPointsFlag, homeTeamId, visitingTeamId, mondayNightFlag, gameDateTime) => {
+const createGame = (seasonName, weekNumber, weekName, playoffFlag, guessPointsFlag, visitingTeamId, homeTeamId, mondayNightFlag, gameDateTime) => {
   const timestamp = new Date().getTime(); 
   const teams = teamsInfo();
   const theseTeams = [];
