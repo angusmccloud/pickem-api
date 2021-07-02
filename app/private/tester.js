@@ -23,6 +23,7 @@ const createGame = require('../functions/createGame/createGame');
 const updateGameTime = require('../functions/updateGameTime/updateGameTime');
 const updateGameWinner = require('../functions/updateGameWinner/updateGameWinner');
 const updateParticipant = require('../functions/updateParticipant/updateParticipant');
+const setPick = require('../functions/setPick/setPick');
 
 
 module.exports.tester = async () => { 
@@ -36,6 +37,7 @@ module.exports.tester = async () => {
   // return await updateGameTime('093aee60-d85c-11eb-910f-1392b5a10712', 2, '2', true, true, dt.getTime());
   // return await updateGameWinner('093aee60-d85c-11eb-910f-1392b5a10712', 7, 15, 20);
   // return await updateGameWinner('8f41eb20-d78b-11eb-a319-1501a078bc2e', 6, 10, 15);
-  return await updateParticipant('u1235', 1, true, false, true);
+  // return await updateParticipant('u1235', 1, true, false, true);
+  return await setPick('u1234', 1, '093aee60-d85c-11eb-910f-1392b5a10712', 1, 35);
 
 };
