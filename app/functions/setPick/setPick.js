@@ -6,7 +6,7 @@ const dynamoUpdateItem = require('../../utils/dynamoUpdateItem');
 const dynamoFetchSingleItem = require('../../utils/dynamoFetchSingleItem');
 const dynamoScanAllRows = require('../../utils/dynamoScanAllRows');
 
-const setPick = async (userId, leagueId, gameId, pickedTeamId, totalPoints = 0) => {
+const setPick = async (userId, leagueId, gameId, pickedTeamId, totalPoints = 0, adminOverride = false) => {
   const timestamp = new Date().getTime(); 
   const leagues = await leagueInfo().allLeagues;
   const matchingLeague = leagues.filter(league => league.leagueId === leagueId);
@@ -36,7 +36,7 @@ const setPick = async (userId, leagueId, gameId, pickedTeamId, totalPoints = 0) 
     return 'This user isn\'t in the league this year';
   }
 
-  if(gameInfo.gameDateTime <= timestamp) {
+  if(gameInfo.gameDateTime <= timestamp && !adminOverride) {
     return 'This game has already started';
   }
 
