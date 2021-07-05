@@ -25,7 +25,7 @@ const setPick = async (userId, leagueId, gameId, pickedTeamId, totalPoints = 0, 
     return 'Invalid Game ID';
   }
 
-  if(matchingLeague[0].seasonName !== gameInfo.seasonName) {
+  if(matchingLeague.seasonName !== gameInfo.seasonName) {
     return 'leagueId and gameId are from different seasons';
   }
 
