@@ -37,21 +37,23 @@ module.exports.tester = async () => {
   // return await createGame('2021', 1, '1', false, true, 1, 7, true, dt.getTime());
   // return await updateGameTime('093aee60-d85c-11eb-910f-1392b5a10712', 2, '2', true, true, dt.getTime());
   // return await updateGameWinner('093aee60-d85c-11eb-910f-1392b5a10712', 7, 15, 20);
-  // return await updateParticipant('u1237', 1, true, false, true);
+  // return await updateParticipant('u1235', 1, true, true, true);
   // return await setPick('u1234', 1, '093aee60-d85c-11eb-910f-1392b5a10712', 1, 35);
   // for(let i = 0; i < 10; i++){
   //   console.log(5
   // }
-  return await getStandings(1);
-
+  return await getStandings(1, 7);
 
 
   ////
   // Load up fake picks for a few users
   // Or to set fake winners
   ////
-  // const userId = 'u1237';
-  // for(let i = 1; i <= 3; i++) {
+  // const fakeUsers = ['u1234', 'u1235', 'u1236', 'u1237']; // All Fake Teams
+  // const fakeUsers = ['u1235', 'u1237']; // Fake Playoff Teams
+  // const minWeek = 19;
+  // const maxWeek = 22;
+  // for(let i = minWeek; i <= maxWeek; i++) {
   //   const games = await dynamoScanAllRows(
   //     process.env.GAMES_TABLE, 
   //     'gameId, homeTeamId, visitingTeamId, guessPointsFlag', 
@@ -60,11 +62,15 @@ module.exports.tester = async () => {
   //     'pickId');
   //   for(let ii = 0; ii < games.length; ii++) {
   //     const game = games[ii];
-  //     const guess = Math.round(Math.random() * 1) === 1 ? game.homeTeamId : game.visitingTeamId;
-  //     // Used to set fake picks
-  //     // setPick(userId, 1, game.gameId, guess, Math.round(Math.random() * 45));
+  //     for(let u = 0; u < fakeUsers.length; u++) {
+  //       const userId = fakeUsers[u];
+  //       const guess = Math.round(Math.random() * 1) === 1 ? game.homeTeamId : game.visitingTeamId;
+  //       // Used to set fake picks
+  //       setPick(userId, 1, game.gameId, guess, Math.round(Math.random() * 45));
+  //     }
   //     // Used to set fake winners
-  //     // updateGameWinner(game.gameId, guess, Math.round(Math.random() * 25), Math.round(Math.random() * 25));
+  //     const winner = Math.round(Math.random() * 1) === 1 ? game.homeTeamId : game.visitingTeamId;
+  //     updateGameWinner(game.gameId, winner, Math.round(Math.random() * 25), Math.round(Math.random() * 25));
   //   }
   // }
 };
