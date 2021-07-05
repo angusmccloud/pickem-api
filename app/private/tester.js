@@ -42,7 +42,7 @@ module.exports.tester = async () => {
   // for(let i = 0; i < 10; i++){
   //   console.log(5
   // }
-  // return await getStandings(1);
+  return await getStandings(1);
 
 
 
