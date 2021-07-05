@@ -7,8 +7,8 @@ const dynamoFetchSingleItem = require('../../utils/dynamoFetchSingleItem');
 const updateParticipant = async (userId, leagueId, playingSeason, playingPlayoffs, paid) => {
   const timestamp = new Date().getTime(); 
   const leagues = await leagueInfo().allLeagues;
-  const matchingLeague = leagues.filter(league => league.leagueId === leagueId);
-  if(matchingLeague.length === 1) {
+  const matchingLeague = leagues.find(league => league.leagueId === leagueId);
+  if(matchingLeague) {
     const existingParticipant = await dynamoFetchSingleItem(process.env.PARTICIPANTS_TABLE, 'participantId', `${leagueId}-${userId}`);
     if(existingParticipant !== undefined) {
       const updatedValues = [

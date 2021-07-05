@@ -9,8 +9,9 @@ const dynamoScanAllRows = require('../../utils/dynamoScanAllRows');
 const setPick = async (userId, leagueId, gameId, pickedTeamId, totalPoints = 0, adminOverride = false) => {
   const timestamp = new Date().getTime(); 
   const leagues = await leagueInfo().allLeagues;
-  const matchingLeague = leagues.filter(league => league.leagueId === leagueId);
-  if(matchingLeague.length !== 1) {
+  const matchingLeague = leagues.find(league => league.leagueId === leagueId);
+  console.log(matchingLeague);
+  if(matchingLeague === undefined) {
     return 'Invalid League ID';
   }
 

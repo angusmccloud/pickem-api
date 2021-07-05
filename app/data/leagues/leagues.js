@@ -15,7 +15,7 @@ const leagueInfo = () => {
     }
 ];
 
-  const defaultLeague = leagues.filter(league => league.defaultLeague);
+  const defaultLeague = leagues.find(league => league.defaultLeague);
 
   return {
     allLeagues: leagues,

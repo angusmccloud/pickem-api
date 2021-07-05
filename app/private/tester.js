@@ -24,6 +24,7 @@ const updateGameTime = require('../functions/updateGameTime/updateGameTime');
 const updateGameWinner = require('../functions/updateGameWinner/updateGameWinner');
 const updateParticipant = require('../functions/updateParticipant/updateParticipant');
 const setPick = require('../functions/setPick/setPick');
+const getStandings = require('../functions/getStandings/getStandings');
 
 
 module.exports.tester = async () => { 
@@ -36,18 +37,18 @@ module.exports.tester = async () => {
   // return await createGame('2021', 1, '1', false, true, 1, 7, true, dt.getTime());
   // return await updateGameTime('093aee60-d85c-11eb-910f-1392b5a10712', 2, '2', true, true, dt.getTime());
   // return await updateGameWinner('093aee60-d85c-11eb-910f-1392b5a10712', 7, 15, 20);
-  // return await updateGameWinner('8f41eb20-d78b-11eb-a319-1501a078bc2e', 6, 10, 15);
   // return await updateParticipant('u1237', 1, true, false, true);
   // return await setPick('u1234', 1, '093aee60-d85c-11eb-910f-1392b5a10712', 1, 35);
   // for(let i = 0; i < 10; i++){
   //   console.log(5
   // }
-
+  // return await getStandings(1);
 
 
 
   ////
   // Load up fake picks for a few users
+  // Or to set fake winners
   ////
   // const userId = 'u1237';
   // for(let i = 1; i <= 3; i++) {
@@ -60,9 +61,10 @@ module.exports.tester = async () => {
   //   for(let ii = 0; ii < games.length; ii++) {
   //     const game = games[ii];
   //     const guess = Math.round(Math.random() * 1) === 1 ? game.homeTeamId : game.visitingTeamId;
-  //     setPick(userId, 1, game.gameId, guess, Math.round(Math.random() * 45));
+  //     // Used to set fake picks
+  //     // setPick(userId, 1, game.gameId, guess, Math.round(Math.random() * 45));
+  //     // Used to set fake winners
+  //     // updateGameWinner(game.gameId, guess, Math.round(Math.random() * 25), Math.round(Math.random() * 25));
   //   }
   // }
-
-
 };
