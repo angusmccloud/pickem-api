@@ -26,6 +26,7 @@ const updateParticipant = require('../functions/updateParticipant/updateParticip
 const setPick = require('../functions/setPick/setPick');
 const getStandings = require('../functions/getStandings/getStandings');
 const getPicks = require('../functions/getPicks/getPicks');
+const getPicksByWeek = require('../functions/getPicksByWeek/getPicksByWeek');
 
 
 module.exports.tester = async () => { 
@@ -44,7 +45,8 @@ module.exports.tester = async () => {
   //   console.log(5
   // }
   // return await getStandings(1, 7);
-  return await getPicks(1, 20, 'u1235', false); 
+  // return await getPicks(1, 20, 'u1235', false);
+  return await getPicksByWeek(1, 'u1235');
 
 
   ////
