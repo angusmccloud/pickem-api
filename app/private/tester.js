@@ -25,6 +25,7 @@ const updateGameWinner = require('../functions/updateGameWinner/updateGameWinner
 const updateParticipant = require('../functions/updateParticipant/updateParticipant');
 const setPick = require('../functions/setPick/setPick');
 const getStandings = require('../functions/getStandings/getStandings');
+const getPicks = require('../functions/getPicks/getPicks');
 
 
 module.exports.tester = async () => { 
@@ -42,14 +43,15 @@ module.exports.tester = async () => {
   // for(let i = 0; i < 10; i++){
   //   console.log(5
   // }
-  return await getStandings(1, 7);
+  // return await getStandings(1, 7);
+  return await getPicks(1, 20, 'u1235', false); 
 
 
   ////
   // Load up fake picks for a few users
   // Or to set fake winners
   ////
-  // const fakeUsers = ['u1234', 'u1235', 'u1236', 'u1237']; // All Fake Teams
+  // // const fakeUsers = ['u1234', 'u1235', 'u1236', 'u1237']; // All Fake Teams
   // const fakeUsers = ['u1235', 'u1237']; // Fake Playoff Teams
   // const minWeek = 19;
   // const maxWeek = 22;

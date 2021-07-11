@@ -83,7 +83,7 @@ const setPick = async (userId, leagueId, gameId, pickedTeamId, totalPoints = 0, 
       },
       {
         fieldName: 'totalPoints',
-        value: totalPoints
+        value: gameInfo.guessPointsFlag ? totalPoints : 0,
       }
     ];
 
