@@ -46,7 +46,7 @@ module.exports.tester = async () => {
   // }
   // return await getStandings(1, 7);
   // return await getPicks(1, 20, 'u1235', false);
-  return await getPicksByWeek(1, 'u1235');
+  return await getPicksByWeek(1, 'u1234');
 
 
   ////

@@ -3,6 +3,7 @@ const { toLower, times } = require('lodash');
 const leagueInfo = require('../../data/leagues/leagues');
 const teamsInfo = require('../../data/teams/teams');
 const dynamoScanAllRows = require('../../utils/dynamoScanAllRows');
+const dynamoFetchSingleItem = require('../../utils/dynamoFetchSingleItem');
 
 const getPicksByWeek = async (leagueId, userId) => {
   const timestamp = new Date().getTime(); 
@@ -28,19 +29,15 @@ const getPicksByWeek = async (leagueId, userId) => {
     {':seasonName': matchingLeague.seasonName, ':userId': userId},
     'pickId');
 
-  const participantsPromise = dynamoScanAllRows(
-    process.env.PARTICIPANTS_TABLE, 
-    'userId, paid, playingSeason, playingPlayoffs', 
-    `leagueId = :leagueId AND playingSeason = :true`, 
-    {':leagueId': leagueId, ':true': true}, 
-    'participantId');
+  const participantPromise = dynamoFetchSingleItem(
+    process.env.PARTICIPANTS_TABLE,
+    'participantId',
+    `${leagueId}-${userId}`
+  );
 
   const games = await gamesPromise;
   const picks = await picksPromise;
-  const participants = await participantsPromise;
-  const playoffParticipants = participants.filter(participant => {
-    return participant.playingPlayoffs
-  });
+  const participant = await participantPromise;
 
   games.sort((a, b) => {
     return a.weekNumber - b.weekNumber;
@@ -62,7 +59,8 @@ const getPicksByWeek = async (leagueId, userId) => {
         weekNumber: game.weekNumber,
         weekName: game.weekName,
         numberOfGames: weekGames.length,
-        numberOfPicks: weekPicks
+        numberOfPicks: weekPicks,
+        pickingWeek: !game.playoffFlag || participant.playingPlayoffs,
       });
     }
   };
