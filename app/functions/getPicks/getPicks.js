@@ -1,11 +1,12 @@
 'use strict';
-const { toLower, times } = require('lodash');
 const leagueInfo = require('../../data/leagues/leagues');
 const teamsInfo = require('../../data/teams/teams');
 const dynamoScanAllRows = require('../../utils/dynamoScanAllRows');
+const cognitoGetAllUsers = require('../../utils/cognitoGetAllUsers/cognitoGetAllUsers');
 
 const getPicks = async (leagueId, weekNumber, userId, adminOverride) => {
   const timestamp = new Date().getTime(); 
+  const allUsers = await cognitoGetAllUsers();
   const leagues = await leagueInfo().allLeagues;
   const teams = await teamsInfo();
   const matchingLeague = leagues.find(league => league.leagueId === leagueId);
@@ -72,6 +73,7 @@ const getPicks = async (leagueId, weekNumber, userId, adminOverride) => {
     const thisUserId = thisWeekParticipants[i].userId;
     const thisUserPicks = picks.filter(pick => pick.userId === thisUserId);
     const thisUserPicksResult = [];
+    const user = allUsers.find(user => user.userId === thisUserId);
     for(let ii = 0; ii < thisUserPicks.length; ii++) {
       const thisPick = thisUserPicks[ii];
       const thisGame = gameResult.find(game => game.gameId === thisPick.gameId);
@@ -80,7 +82,10 @@ const getPicks = async (leagueId, weekNumber, userId, adminOverride) => {
       }
     }
     picksResult.push({
-      userId: thisUserId,
+      user: {
+        userId: thisUserId,
+        username: user.username,
+      },
       picks: thisUserPicksResult
     });
   }

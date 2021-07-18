@@ -1,14 +1,11 @@
 'use strict';
-const { toLower, times } = require('lodash');
 const leagueInfo = require('../../data/leagues/leagues');
-const teamsInfo = require('../../data/teams/teams');
 const dynamoScanAllRows = require('../../utils/dynamoScanAllRows');
 const dynamoFetchSingleItem = require('../../utils/dynamoFetchSingleItem');
 
 const getPicksByWeek = async (leagueId, userId) => {
   const timestamp = new Date().getTime(); 
   const leagues = await leagueInfo().allLeagues;
-  const teams = await teamsInfo();
   const matchingLeague = leagues.find(league => league.leagueId === leagueId);
 
   if(matchingLeague === undefined) {

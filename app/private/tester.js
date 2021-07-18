@@ -43,19 +43,19 @@ module.exports.tester = async () => {
   // return await createGame('2021', 1, '1', false, true, 1, 7, true, dt.getTime());
   // return await updateGameTime('093aee60-d85c-11eb-910f-1392b5a10712', 2, '2', true, true, dt.getTime());
   // return await updateGameWinner('093aee60-d85c-11eb-910f-1392b5a10712', 7, 15, 20);
-  // return await updateParticipant('u1235', 1, true, true, true);
+  // return await updateParticipant('980a0f9e-ede3-4d7b-a195-6367e68d3d40', 1, true, true, false);
   // return await setPick('u1234', 1, '093aee60-d85c-11eb-910f-1392b5a10712', 1, 35);
   // for(let i = 0; i < 10; i++){
   //   console.log(5
   // }
-  // return await getStandings(1, 7);
-  // return await getPicks(1, 20, 'u1235', false);
-  // return await getPicksByWeek(1, 'u1234');
-  // return await getUsers(1);
+  // return await getStandings(1);
+  // return await getPicks(1, 5, '2ce7edd7-87aa-4638-9d9b-c9a4e77d5b84', true);
+  // return await getPicksByWeek(1, '2ce7edd7-87aa-4638-9d9b-c9a4e77d5b84');
+  return await getUsers(1);
   // return await getPayoutStructure(2);
 
   // return await dynamoScanAllRows('testTable', 'testTable');
-  return await cognitoGetAllUsers();
+  // return await cognitoGetAllUsers();
 
 
 
@@ -63,10 +63,10 @@ module.exports.tester = async () => {
   // Load up fake picks for a few users
   // Or to set fake winners
   ////
-  // // const fakeUsers = ['u1234', 'u1235', 'u1236', 'u1237']; // All Fake Teams
-  // const fakeUsers = ['u1235', 'u1237']; // Fake Playoff Teams
-  // const minWeek = 19;
-  // const maxWeek = 22;
+  // const fakeUsers = ['980a0f9e-ede3-4d7b-a195-6367e68d3d40', '2ce7edd7-87aa-4638-9d9b-c9a4e77d5b84', 'f7c41f90-ba10-4d86-a9b8-83520f4797e0']; // All Fake Teams
+  // // const fakeUsers = ['u1235', 'u1237']; // Fake Playoff Teams
+  // const minWeek = 1;
+  // const maxWeek = 18;
   // for(let i = minWeek; i <= maxWeek; i++) {
   //   const games = await dynamoScanAllRows(
   //     process.env.GAMES_TABLE, 

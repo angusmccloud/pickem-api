@@ -3,6 +3,11 @@
 const AWS = require('aws-sdk');
 const cognitoidentityserviceprovider = new AWS.CognitoIdentityServiceProvider();
 
+////
+// This might only fetch 60 rows (like Scan does)
+// Check as the site builds out
+////
+
 const cognitoGetAllUsers = async () => {
   const params = {
     UserPoolId: process.env.USER_POOL_ID
@@ -27,7 +32,7 @@ const cognitoGetAllUsers = async () => {
       }
     };
   };
-  
+
   return users;
 };
 

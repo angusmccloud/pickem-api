@@ -1,15 +1,10 @@
 'use strict';
-const { toLower, times } = require('lodash');
 const leagueInfo = require('../../data/leagues/leagues');
 const dynamoScanAllRows = require('../../utils/dynamoScanAllRows');
-////
-// This function needs to be re-written once we're connected to Cognito
-// Should pull all Cognito users
-// Then merge those in with the Participants table users
-////
+const cognitoGetAllUsers = require('../../utils/cognitoGetAllUsers/cognitoGetAllUsers');
 
 const getUsers = async (leagueId) => {
-  const timestamp = new Date().getTime(); 
+  const allUsers = await cognitoGetAllUsers();
   const leagues = await leagueInfo().allLeagues;
   const matchingLeague = leagues.find(league => league.leagueId === leagueId);
 
@@ -24,12 +19,31 @@ const getUsers = async (leagueId) => {
     {':leagueId': leagueId}, 
     'participantId');
 
-  participants.sort((a, b) => {
-    return a.playingSeason - b.playingSeason;
+  const users = allUsers.map(user => {
+    const userId = user.userId;
+    const email = user.email;
+    const username = user.username;
+    const participant = participants.find(participant => participant.userId === userId);
+    const paid = participant ? participant.paid : false;
+    const playingSeason = participant ? participant.playingSeason : false;
+    const playingPlayoffs = participant ? participant.playingPlayoffs : false;
+    return {
+      userId,
+      email,
+      username,
+      paid,
+      playingSeason,
+      playingPlayoffs,
+    };
+  });
+
+
+  users.sort((a, b) => {
+    return b.playingSeason - a.playingSeason || a.username.localeCompare(b.username);
   });
 
   return {
-    participants
+    users
   };
 };
 

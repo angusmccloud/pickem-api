@@ -2,8 +2,10 @@
 const { toLower } = require('lodash');
 const leagueInfo = require('../../data/leagues/leagues');
 const dynamoScanAllRows = require('../../utils/dynamoScanAllRows');
+const cognitoGetAllUsers = require('../../utils/cognitoGetAllUsers/cognitoGetAllUsers');
 
 const getStandings = async (leagueId, weekNumber) => {
+  const allUsers = await cognitoGetAllUsers();
   const leagues = await leagueInfo().allLeagues;
   const matchingLeague = leagues.find(league => league.leagueId === leagueId);
 
@@ -48,8 +50,10 @@ const getStandings = async (leagueId, weekNumber) => {
   });
   
   const standings = participants.map(participant => {
+    const user = allUsers.find(user => user.userId === participant.userId);
     return {
       userId: participant.userId,
+      username: user.username,
       correct: 0,
       incorrect: 0,
       mnfCorrect: 0,
@@ -59,8 +63,10 @@ const getStandings = async (leagueId, weekNumber) => {
   });
 
   const playoffStandings = playoffParticipants.map(participant => {
+    const user = allUsers.find(user => user.userId === participant.userId);
     return {
       userId: participant.userId,
+      username: user.username,
       correct: 0,
       incorrect: 0,
       wildCardCorrect: 0,
