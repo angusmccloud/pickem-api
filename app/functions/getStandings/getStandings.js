@@ -129,6 +129,19 @@ const getStandings = async (leagueId, weekNumber) => {
       || b.divisionCorrect - a.divisionCorrect
       || a.pointDifference - b.pointDifference;
   });
+  let lastRank = 0;
+  let lastRecord = '';
+  for(let i = 0; i < standings.length; i++) {
+    const row = standings[i];
+    const record = `${row.correct}-${row.mnfCorrect}-${row.divisionCorrect}-${row.pointDifference}`;
+    if(record !== lastRecord) {
+      standings[i].rank = i + 1;
+      lastRank = i + 1;
+      lastRecord = record;
+    } else {
+      standings[i].rank = lastRank;
+    }
+  }
 
   playoffStandings.sort((a, b) => {
     return b.correct - a.correct
@@ -138,6 +151,19 @@ const getStandings = async (leagueId, weekNumber) => {
       || b.wildCardCorrect - a.wildCardCorrect
       || a.pointDifference - b.pointDifference;
   });
+  lastRank = 0;
+  lastRecord = '';
+  for(let i = 0; i < playoffStandings.length; i++) {
+    const row = playoffStandings[i];
+    const record = `${row.correct}-${row.superbowlCorrect}-${row.conferenceChampionshipCorrect}-${row.divisionalCorrect}-${row.wildCardCorrect}-${row.pointDifference}`;
+    if(record !== lastRecord) {
+      playoffStandings[i].rank = i + 1;
+      lastRank = i + 1;
+      lastRecord = record;
+    } else {
+      playoffStandings[i].rank = lastRank;
+    }
+  }
 
   return {
     regularSeason: standings,
