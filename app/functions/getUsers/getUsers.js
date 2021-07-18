@@ -2,6 +2,11 @@
 const { toLower, times } = require('lodash');
 const leagueInfo = require('../../data/leagues/leagues');
 const dynamoScanAllRows = require('../../utils/dynamoScanAllRows');
+////
+// This function needs to be re-written once we're connected to Cognito
+// Should pull all Cognito users
+// Then merge those in with the Participants table users
+////
 
 const getUsers = async (leagueId) => {
   const timestamp = new Date().getTime(); 

@@ -15,6 +15,7 @@ provider:
     PARTICIPANTS_TABLE: ${self:service}-${opt:stage, self:provider.stage}-participants
     GAMES_TABLE: ${self:service}-${opt:stage, self:provider.stage}-games
     PICKS_TABLE: ${self:service}-${opt:stage, self:provider.stage}-picks
+    USER_POOL_ID: ${env:userPoolId}
 
   iamRoleStatements:
     - Effect: Allow

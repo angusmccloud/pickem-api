@@ -3,6 +3,7 @@
 const AWS = require('aws-sdk');
 AWS.config.setPromisesDependency(require('bluebird'));
 const dynamoDb = new AWS.DynamoDB.DocumentClient();
+const cognitoidentityserviceprovider = new AWS.CognitoIdentityServiceProvider();
 
 const jwt = require('jsonwebtoken');
 
@@ -17,6 +18,7 @@ const dynamoUpdateItem = require('../utils/dynamoUpdateItem');
 const getUserId = require('../utils/getUserId/getUserId');
 const leagueInfo = require('../data/leagues/leagues');
 const teamsInfo = require('../data/teams/teams');
+const cognitoGetAllUsers = require('../utils/cognitoGetAllUsers/cognitoGetAllUsers');
 
 // Functions
 const createGame = require('../functions/createGame/createGame');
@@ -28,6 +30,7 @@ const getStandings = require('../functions/getStandings/getStandings');
 const getPicks = require('../functions/getPicks/getPicks');
 const getPicksByWeek = require('../functions/getPicksByWeek/getPicksByWeek');
 const getUsers = require('../functions/getUsers/getUsers');
+const getPayoutStructure = require('../functions/getPayoutStructure/getPayoutStructure');
 
 
 module.exports.tester = async () => { 
@@ -48,7 +51,12 @@ module.exports.tester = async () => {
   // return await getStandings(1, 7);
   // return await getPicks(1, 20, 'u1235', false);
   // return await getPicksByWeek(1, 'u1234');
-  return await getUsers(1);
+  // return await getUsers(1);
+  // return await getPayoutStructure(2);
+
+  // return await dynamoScanAllRows('testTable', 'testTable');
+  return await cognitoGetAllUsers();
+
 
 
   ////
