@@ -1,5 +1,5 @@
 'use strict';
-const uuid = require('uuid');
+const { v4: uuidv4 } = require('uuid');
 const dynamoCreateItem = require('../../utils/dynamoCreateItem');
 const teamsInfo = require('../../data/teams/teams');
 
@@ -16,7 +16,7 @@ const createGame = (seasonName, weekNumber, weekName, playoffFlag, guessPointsFl
   console.log('-- IDs --', homeTeamId, visitingTeamId);
   if(theseTeams.length === 2) {
     const gameObj = {
-      gameId: uuid.v1(),
+      gameId: uuidv4(),
       seasonName,
       weekNumber,
       weekName,

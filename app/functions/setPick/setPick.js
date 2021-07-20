@@ -1,5 +1,5 @@
 'use strict';
-const uuid = require('uuid');
+const { v4: uuidv4 } = require('uuid');
 const leagueInfo = require('../../data/leagues/leagues');
 const dynamoCreateItem = require('../../utils/dynamoCreateItem');
 const dynamoUpdateItem = require('../../utils/dynamoUpdateItem');
@@ -56,7 +56,7 @@ const setPick = async (userId, leagueId, gameId, pickedTeamId, totalPoints = 0, 
   if(existingPick.length === 0) {
     // Hasn't made this pick before, create record
     const pickObj = {
-      pickId: uuid.v1(),
+      pickId: uuidv4(),
       seasonName: gameInfo.seasonName,
       weekNumber: gameInfo.weekNumber,
       gameId,

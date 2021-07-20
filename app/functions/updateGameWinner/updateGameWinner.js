@@ -1,9 +1,8 @@
 'use strict';
-const uuid = require('uuid');
 const dynamoUpdateItem = require('../../utils/dynamoUpdateItem');
 const dynamoFetchSingleItem = require('../../utils/dynamoFetchSingleItem');
 
-const updateGameTime = async (gameId, winningTeamId, homeTeamPoints, visitingTeamPoints) => {
+const updateGameWinner = async (gameId, winningTeamId, homeTeamPoints, visitingTeamPoints) => {
   const existingGame = await dynamoFetchSingleItem(process.env.GAMES_TABLE, 'gameId', gameId);
   if(existingGame !== undefined) {
     const updatedValues = [
@@ -35,4 +34,4 @@ const updateGameTime = async (gameId, winningTeamId, homeTeamPoints, visitingTea
   return 'Invalid gameId';
 };
 
-module.exports = updateGameTime;
+module.exports = updateGameWinner;

@@ -1,5 +1,4 @@
 'use strict';
-const uuid = require('uuid');
 const dynamoUpdateItem = require('../../utils/dynamoUpdateItem');
 const dynamoFetchSingleItem = require('../../utils/dynamoFetchSingleItem');
 
