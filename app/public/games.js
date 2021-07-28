@@ -17,7 +17,7 @@ module.exports.createGame = async (event, context, callback) => {
     console.log('-- Event --', event);
     const jwtToken = event.headers.jwtheader;
     console.log('-- About to Check UserId for Token', jwtToken);
-    const userId = await getUserId(jwtToken);
+    const userId = await getUserId(jwtToken).userId;
     const requestBody = JSON.parse(event.body);
     const { seasonName, weekNumber, weekName, playoffFlag, guessPointsFlag, visitingTeamId, homeTeamId, mondayNightFlag, gameDateTime } = requestBody;
 
@@ -103,7 +103,7 @@ module.exports.updateGame = async (event, context, callback) => {
     console.log('-- Event --', event);
     const jwtToken = event.headers.jwtheader;
     console.log('-- About to Check UserId for Token', jwtToken);
-    const userId = await getUserId(jwtToken);
+    const userId = await getUserId(jwtToken).userId;
     const requestBody = JSON.parse(event.body);
     const gameId = event.pathParameters.gameId;
     const { weekNumber, weekName, guessPointsFlag, mondayNightFlag, gameDateTime } = requestBody;
@@ -181,7 +181,7 @@ module.exports.setWinner = async (event, context, callback) => {
     console.log('-- Event --', event);
     const jwtToken = event.headers.jwtheader;
     console.log('-- About to Check UserId for Token', jwtToken);
-    const userId = await getUserId(jwtToken);
+    const userId = await getUserId(jwtToken).userId;
     const requestBody = JSON.parse(event.body);
     const gameId = event.pathParameters.gameId;
     const { winningTeamId, homeTeamPoints, visitingTeamPoints } = requestBody;
@@ -207,7 +207,7 @@ module.exports.setWinner = async (event, context, callback) => {
 
     ////
     // TO-DO:
-    // Verify that userId has permission to create a game
+    // Verify that userId has permission to Set Winner
     ////
 
     if (anyErrors) {

@@ -51,7 +51,7 @@ module.exports.tester = async () => {
   // return await getStandings(1);
   // return await getPicks(1, 5, '2ce7edd7-87aa-4638-9d9b-c9a4e77d5b84', true);
   // return await getPicksByWeek(1, '2ce7edd7-87aa-4638-9d9b-c9a4e77d5b84');
-  return await getUsers(1);
+  // return await getUsers(1);
   // return await getPayoutStructure(2);
 
   // return await dynamoScanAllRows('testTable', 'testTable');

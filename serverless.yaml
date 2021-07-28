@@ -26,6 +26,7 @@ provider:
         - dynamodb:UpdateItem
         - dynamodb:GetItem
         - dynamodb:PutItem
+        - cognito-idp:ListUsers
         - lambda:InvokeFunction
         - "sqs:SendMessage"
         - "sqs:GetQueueUrl"
@@ -38,7 +39,7 @@ functions:
   getStandings:
     warmup: ${env:preWarm}
     prewarm: ${env:preWarm}
-    handler: app/public/standings.getRegularSeason
+    handler: app/public/standings.getStandings
     description: Regular Season Standings
     events:
       - http:
@@ -52,15 +53,6 @@ functions:
     events:
       - http:
           path: standings/{weekNumber}
-          method: get
-  getStandingsPlayoffs:
-    warmup: ${env:preWarm}
-    prewarm: ${env:preWarm}
-    handler: app/public/standings.getPlayoffs
-    description: Playoff Standings
-    events:
-      - http:
-          path: standings/playoffs
           method: get
   getPicksOneWeekAllPlayers:
     warmup: ${env:preWarm}
