@@ -30,6 +30,7 @@ const getStandings = require('../functions/getStandings/getStandings');
 const getPicks = require('../functions/getPicks/getPicks');
 const getPicksByWeek = require('../functions/getPicksByWeek/getPicksByWeek');
 const getUsers = require('../functions/getUsers/getUsers');
+const getUser = require('../functions/getUser/getUser');
 const getPayoutStructure = require('../functions/getPayoutStructure/getPayoutStructure');
 
 
@@ -52,10 +53,11 @@ module.exports.tester = async () => {
   // return await getPicks(1, 5, '2ce7edd7-87aa-4638-9d9b-c9a4e77d5b84', true);
   // return await getPicksByWeek(1, '2ce7edd7-87aa-4638-9d9b-c9a4e77d5b84');
   // return await getUsers(1);
+  // return await getUser(1, '980a0f9e-ede3-4d7b-a195-6367e68d3d40');
   // return await getPayoutStructure(2);
 
   // return await dynamoScanAllRows('testTable', 'testTable');
-  // return await cognitoGetAllUsers();
+  return await cognitoGetAllUsers();
 
 
 

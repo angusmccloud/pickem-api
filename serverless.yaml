@@ -129,29 +129,29 @@ functions:
   getCurrentParticipantStatus:
     warmup: ${env:preWarm}
     prewarm: ${env:preWarm}
-    handler: app/public/participants.getSingleParticipant
+    handler: app/public/users.getSingleParticipant
     description: Get Info on Current Participant
     events:
       - http:
-          path: participants
+          path: user
           method: get
   getAllParticipants:
     warmup: ${env:preWarm}
     prewarm: ${env:preWarm}
-    handler: app/public/participants.getAllParticipants
+    handler: app/public/users.getAllParticipants
     description: Get All Participants
     events:
       - http:
-          path: participants/all
+          path: user/all
           method: get
   updateParticipant:
     warmup: ${env:preWarm}
     prewarm: ${env:preWarm}
-    handler: app/public/participants.updateParticipant
+    handler: app/public/users.updateParticipant
     description: Update a Participant
     events:
       - http:
-          path: participants/{participantId}
+          path: user/{userId}
           method: put
           
 resources:
