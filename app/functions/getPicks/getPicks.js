@@ -39,8 +39,12 @@ const getPicks = async (leagueId, weekNumber, userId, adminOverride) => {
   const participantsPromise = dynamoScanAllRows(
     process.env.PARTICIPANTS_TABLE, 
     'userId, paid, playingSeason, playingPlayoffs', 
-    `leagueId = :leagueId AND playingSeason = :true`, 
-    {':leagueId': leagueId, ':true': true}, 
+    userId ? 
+      `leagueId = :leagueId AND playingSeason = :true AND userId = :userId` :
+      `leagueId = :leagueId AND playingSeason = :true`, 
+    userId ? 
+      {':leagueId': leagueId, ':true': true, ':userId': userId} :
+      {':leagueId': leagueId, ':true': true}, 
     'participantId');
 
   const games = await gamesPromise;
