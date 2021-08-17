@@ -45,6 +45,16 @@ functions:
       - http:
           path: standings
           method: get
+          cors:
+              origin: '*'
+              headers:
+                - Content-Type
+                - X-Amz-Date
+                - Authorization
+                - X-Api-Key
+                - X-Amz-Security-Token
+                - jwthEADER
+              allowCredentials: true
   getStandingsByWeek:
     warmup: ${env:preWarm}
     prewarm: ${env:preWarm}
@@ -54,6 +64,16 @@ functions:
       - http:
           path: standings/{weekNumber}
           method: get
+          cors:
+              origin: '*'
+              headers:
+                - Content-Type
+                - X-Amz-Date
+                - Authorization
+                - X-Api-Key
+                - X-Amz-Security-Token
+                - jwthEADER
+              allowCredentials: true
   getPicksOneWeekAllPlayers:
     warmup: ${env:preWarm}
     prewarm: ${env:preWarm}
@@ -63,6 +83,16 @@ functions:
       - http:
           path: picks/all/{weekNumber}
           method: get
+          cors:
+              origin: '*'
+              headers:
+                - Content-Type
+                - X-Amz-Date
+                - Authorization
+                - X-Api-Key
+                - X-Amz-Security-Token
+                - jwthEADER
+              allowCredentials: true
   getPicksOneWeekOnePlayer:
     warmup: ${env:preWarm}
     prewarm: ${env:preWarm}
@@ -72,6 +102,16 @@ functions:
       - http:
           path: picks/{weekNumber}
           method: get
+          cors:
+              origin: '*'
+              headers:
+                - Content-Type
+                - X-Amz-Date
+                - Authorization
+                - X-Api-Key
+                - X-Amz-Security-Token
+                - jwthEADER
+              allowCredentials: true
   getPicksAllWeeksOnePlayer:
     warmup: ${env:preWarm}
     prewarm: ${env:preWarm}
@@ -81,6 +121,16 @@ functions:
       - http:
           path: picks
           method: get
+          cors:
+              origin: '*'
+              headers:
+                - Content-Type
+                - X-Amz-Date
+                - Authorization
+                - X-Api-Key
+                - X-Amz-Security-Token
+                - jwthEADER
+              allowCredentials: true
   setPick:
     warmup: ${env:preWarm}
     prewarm: ${env:preWarm}
@@ -90,6 +140,16 @@ functions:
       - http:
           path: picks
           method: put
+          cors:
+              origin: '*'
+              headers:
+                - Content-Type
+                - X-Amz-Date
+                - Authorization
+                - X-Api-Key
+                - X-Amz-Security-Token
+                - jwthEADER
+              allowCredentials: true
   createGame:
     warmup: ${env:preWarm}
     prewarm: ${env:preWarm}
@@ -99,6 +159,16 @@ functions:
       - http:
           path: games/create
           method: post
+          cors:
+              origin: '*'
+              headers:
+                - Content-Type
+                - X-Amz-Date
+                - Authorization
+                - X-Api-Key
+                - X-Amz-Security-Token
+                - jwthEADER
+              allowCredentials: true
   updateGame:
     warmup: ${env:preWarm}
     prewarm: ${env:preWarm}
@@ -108,6 +178,16 @@ functions:
       - http:
           path: games/update/{gameId}
           method: put
+          cors:
+              origin: '*'
+              headers:
+                - Content-Type
+                - X-Amz-Date
+                - Authorization
+                - X-Api-Key
+                - X-Amz-Security-Token
+                - jwthEADER
+              allowCredentials: true
   setWinner:
     warmup: ${env:preWarm}
     prewarm: ${env:preWarm}
@@ -117,6 +197,16 @@ functions:
       - http:
           path: games/setWinner/{gameId}
           method: put
+          cors:
+              origin: '*'
+              headers:
+                - Content-Type
+                - X-Amz-Date
+                - Authorization
+                - X-Api-Key
+                - X-Amz-Security-Token
+                - jwthEADER
+              allowCredentials: true
   getPayoutStructure:
     warmup: ${env:preWarm}
     prewarm: ${env:preWarm}
@@ -126,6 +216,16 @@ functions:
       - http:
           path: rules/payoutStructure
           method: get
+          cors:
+              origin: '*'
+              headers:
+                - Content-Type
+                - X-Amz-Date
+                - Authorization
+                - X-Api-Key
+                - X-Amz-Security-Token
+                - jwthEADER
+              allowCredentials: true
   getCurrentParticipantStatus:
     warmup: ${env:preWarm}
     prewarm: ${env:preWarm}
@@ -135,6 +235,16 @@ functions:
       - http:
           path: user
           method: get
+          cors:
+              origin: '*'
+              headers:
+                - Content-Type
+                - X-Amz-Date
+                - Authorization
+                - X-Api-Key
+                - X-Amz-Security-Token
+                - jwthEADER
+              allowCredentials: true
   getAllParticipants:
     warmup: ${env:preWarm}
     prewarm: ${env:preWarm}
@@ -144,6 +254,16 @@ functions:
       - http:
           path: user/all
           method: get
+          cors:
+              origin: '*'
+              headers:
+                - Content-Type
+                - X-Amz-Date
+                - Authorization
+                - X-Api-Key
+                - X-Amz-Security-Token
+                - jwthEADER
+              allowCredentials: true
   updateParticipant:
     warmup: ${env:preWarm}
     prewarm: ${env:preWarm}
@@ -153,6 +273,16 @@ functions:
       - http:
           path: user/{userId}
           method: put
+          cors:
+              origin: '*'
+              headers:
+                - Content-Type
+                - X-Amz-Date
+                - Authorization
+                - X-Api-Key
+                - X-Amz-Security-Token
+                - jwthEADER
+              allowCredentials: true
           
 resources:
   Resources:

@@ -11,11 +11,12 @@ const jwt = require('jsonwebtoken');
 ////
 
 const getUserId = (jwtToken) => {
-  // const decoded = jwt.decode(jwtToken);
+  const decoded = jwt.decode(jwtToken);
   // return decoded.sub;
   return {
     validUser: true,
-    userId: '980a0f9e-ede3-4d7b-a195-6367e68d3d40',
+    userId: decoded.sub,
+    // userId: '980a0f9e-ede3-4d7b-a195-6367e68d3d40',
     admin: true,
     gameAdmin: true,
   };

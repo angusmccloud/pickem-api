@@ -37,7 +37,9 @@ module.exports.getPicksByWeek = async (event, context, callback) => {
         const response = {
             statusCode: 400,
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Access-Control-Allow-Origin': '*',
+                'Access-Control-Allow-Credentials': true,
             },
             body: JSON.stringify({
                 success: false,
@@ -53,7 +55,9 @@ module.exports.getPicksByWeek = async (event, context, callback) => {
         const response = {
             statusCode: 200,
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Access-Control-Allow-Origin': '*',
+                'Access-Control-Allow-Credentials': true,
             },
             body: JSON.stringify({
                 success: true,
@@ -94,7 +98,9 @@ module.exports.getPicksByWeekByPlayer = async (event, context, callback) => {
         const response = {
             statusCode: 400,
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Access-Control-Allow-Origin': '*',
+                'Access-Control-Allow-Credentials': true,
             },
             body: JSON.stringify({
                 success: false,
@@ -110,7 +116,9 @@ module.exports.getPicksByWeekByPlayer = async (event, context, callback) => {
         const response = {
             statusCode: 200,
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Access-Control-Allow-Origin': '*',
+                'Access-Control-Allow-Credentials': true,
             },
             body: JSON.stringify({
                 success: true,
@@ -147,7 +155,9 @@ module.exports.getPicksByPlayer = async (event, context, callback) => {
         const response = {
             statusCode: 400,
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Access-Control-Allow-Origin': '*',
+                'Access-Control-Allow-Credentials': true,
             },
             body: JSON.stringify({
                 success: false,
@@ -163,7 +173,9 @@ module.exports.getPicksByPlayer = async (event, context, callback) => {
         const response = {
             statusCode: 200,
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Access-Control-Allow-Origin': '*',
+                'Access-Control-Allow-Credentials': true,
             },
             body: JSON.stringify({
                 success: true,
@@ -211,7 +223,9 @@ module.exports.updatePick = async (event, context, callback) => {
         const response = {
             statusCode: 400,
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Access-Control-Allow-Origin': '*',
+                'Access-Control-Allow-Credentials': true,
             },
             body: JSON.stringify({
                 success: false,
@@ -227,7 +241,9 @@ module.exports.updatePick = async (event, context, callback) => {
         const response = {
             statusCode: 200,
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Access-Control-Allow-Origin': '*',
+                'Access-Control-Allow-Credentials': true,
             },
             body: JSON.stringify({
                 success: true,
