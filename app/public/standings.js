@@ -30,7 +30,9 @@ module.exports.getStandings = async (event, context, callback) => {
         const response = {
             statusCode: 400,
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Access-Control-Allow-Origin': '*',
+                'Access-Control-Allow-Credentials': true,
             },
             body: JSON.stringify({
                 success: false,
@@ -46,7 +48,9 @@ module.exports.getStandings = async (event, context, callback) => {
         const response = {
             statusCode: 200,
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Access-Control-Allow-Origin': '*',
+                'Access-Control-Allow-Credentials': true,
             },
             body: JSON.stringify({
                 success: true,
@@ -87,7 +91,9 @@ module.exports.getStandingsByWeek = async (event, context, callback) => {
         const response = {
             statusCode: 400,
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Access-Control-Allow-Origin': '*',
+                'Access-Control-Allow-Credentials': true,
             },
             body: JSON.stringify({
                 success: false,
@@ -103,7 +109,9 @@ module.exports.getStandingsByWeek = async (event, context, callback) => {
         const response = {
             statusCode: 200,
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Access-Control-Allow-Origin': '*',
+                'Access-Control-Allow-Credentials': true,
             },
             body: JSON.stringify({
                 success: true,

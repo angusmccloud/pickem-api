@@ -65,7 +65,9 @@ module.exports.createGame = async (event, context, callback) => {
         const response = {
             statusCode: 400,
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Access-Control-Allow-Origin': '*',
+                'Access-Control-Allow-Credentials': true,
             },
             body: JSON.stringify({
                 success: false,
@@ -81,7 +83,9 @@ module.exports.createGame = async (event, context, callback) => {
         const response = {
             statusCode: 200,
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Access-Control-Allow-Origin': '*',
+                'Access-Control-Allow-Credentials': true,
             },
             body: JSON.stringify({
                 success: true,
@@ -143,7 +147,9 @@ module.exports.updateGame = async (event, context, callback) => {
         const response = {
             statusCode: 400,
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Access-Control-Allow-Origin': '*',
+                'Access-Control-Allow-Credentials': true,
             },
             body: JSON.stringify({
                 success: false,
@@ -159,7 +165,9 @@ module.exports.updateGame = async (event, context, callback) => {
         const response = {
             statusCode: 200,
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Access-Control-Allow-Origin': '*',
+                'Access-Control-Allow-Credentials': true,
             },
             body: JSON.stringify({
                 success: true,
@@ -215,7 +223,9 @@ module.exports.setWinner = async (event, context, callback) => {
         const response = {
             statusCode: 400,
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Access-Control-Allow-Origin': '*',
+                'Access-Control-Allow-Credentials': true,
             },
             body: JSON.stringify({
                 success: false,
@@ -231,7 +241,9 @@ module.exports.setWinner = async (event, context, callback) => {
         const response = {
             statusCode: 200,
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Access-Control-Allow-Origin': '*',
+                'Access-Control-Allow-Credentials': true,
             },
             body: JSON.stringify({
                 success: true,
