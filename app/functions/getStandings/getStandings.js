@@ -175,7 +175,7 @@ const getStandings = async (leagueId, weekNumber) => {
     regularSeason: standings,
     playoffs: playoffStandings,
     standingsInfo: {
-      regularSeason: regularSeasonGames > 0,
+      regularSeason: regularSeasonGames > 0 || weekNumber === undefined,
       playoffs: playofGames > 0,
       singleWeek: weekNumber !== undefined
     }

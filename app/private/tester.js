@@ -44,7 +44,7 @@ module.exports.tester = async () => {
   // return await createGame('2021', 1, '1', false, true, 1, 7, true, dt.getTime());
   // return await updateGameTime('093aee60-d85c-11eb-910f-1392b5a10712', 2, '2', true, true, dt.getTime());
   // return await updateGameWinner('093aee60-d85c-11eb-910f-1392b5a10712', 7, 15, 20);
-  // return await updateParticipant('980a0f9e-ede3-4d7b-a195-6367e68d3d40', 1, true, true, false);
+  // return await updateParticipant('c22a77cd-afa2-4559-8469-79af4c01fe84', 1, true, false, true);
   // return await setPick('u1234', 1, '093aee60-d85c-11eb-910f-1392b5a10712', 1, 35);
   // for(let i = 0; i < 10; i++){
   //   console.log(5
@@ -57,7 +57,7 @@ module.exports.tester = async () => {
   // return await getPayoutStructure(2);
 
   // return await dynamoScanAllRows('testTable', 'testTable');
-  return await cognitoGetAllUsers();
+  // return await cognitoGetAllUsers();
 
 
 
@@ -89,4 +89,5 @@ module.exports.tester = async () => {
   //     updateGameWinner(game.gameId, winner, Math.round(Math.random() * 25), Math.round(Math.random() * 25));
   //   }
   // }
+
 };
