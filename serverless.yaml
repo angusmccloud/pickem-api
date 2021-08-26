@@ -53,7 +53,7 @@ functions:
                 - Authorization
                 - X-Api-Key
                 - X-Amz-Security-Token
-                - jwthEADER
+                - jwtheader
               allowCredentials: true
   getStandingsByWeek:
     warmup: ${env:preWarm}
@@ -72,7 +72,7 @@ functions:
                 - Authorization
                 - X-Api-Key
                 - X-Amz-Security-Token
-                - jwthEADER
+                - jwtheader
               allowCredentials: true
   getPicksOneWeekAllPlayers:
     warmup: ${env:preWarm}
@@ -91,7 +91,7 @@ functions:
                 - Authorization
                 - X-Api-Key
                 - X-Amz-Security-Token
-                - jwthEADER
+                - jwtheader
               allowCredentials: true
   getPicksOneWeekOnePlayer:
     warmup: ${env:preWarm}
@@ -110,7 +110,7 @@ functions:
                 - Authorization
                 - X-Api-Key
                 - X-Amz-Security-Token
-                - jwthEADER
+                - jwtheader
               allowCredentials: true
   getPicksAllWeeksOnePlayer:
     warmup: ${env:preWarm}
@@ -129,7 +129,7 @@ functions:
                 - Authorization
                 - X-Api-Key
                 - X-Amz-Security-Token
-                - jwthEADER
+                - jwtheader
               allowCredentials: true
   setPick:
     warmup: ${env:preWarm}
@@ -148,7 +148,7 @@ functions:
                 - Authorization
                 - X-Api-Key
                 - X-Amz-Security-Token
-                - jwthEADER
+                - jwtheader
               allowCredentials: true
   createGame:
     warmup: ${env:preWarm}
@@ -167,7 +167,7 @@ functions:
                 - Authorization
                 - X-Api-Key
                 - X-Amz-Security-Token
-                - jwthEADER
+                - jwtheader
               allowCredentials: true
   updateGame:
     warmup: ${env:preWarm}
@@ -186,7 +186,7 @@ functions:
                 - Authorization
                 - X-Api-Key
                 - X-Amz-Security-Token
-                - jwthEADER
+                - jwtheader
               allowCredentials: true
   setWinner:
     warmup: ${env:preWarm}
@@ -205,7 +205,7 @@ functions:
                 - Authorization
                 - X-Api-Key
                 - X-Amz-Security-Token
-                - jwthEADER
+                - jwtheader
               allowCredentials: true
   getPayoutStructure:
     warmup: ${env:preWarm}
@@ -224,7 +224,7 @@ functions:
                 - Authorization
                 - X-Api-Key
                 - X-Amz-Security-Token
-                - jwthEADER
+                - jwtheader
               allowCredentials: true
   getCurrentParticipantStatus:
     warmup: ${env:preWarm}
@@ -243,7 +243,7 @@ functions:
                 - Authorization
                 - X-Api-Key
                 - X-Amz-Security-Token
-                - jwthEADER
+                - jwtheader
               allowCredentials: true
   getAllParticipants:
     warmup: ${env:preWarm}
@@ -262,7 +262,7 @@ functions:
                 - Authorization
                 - X-Api-Key
                 - X-Amz-Security-Token
-                - jwthEADER
+                - jwtheader
               allowCredentials: true
   updateParticipant:
     warmup: ${env:preWarm}
@@ -281,7 +281,7 @@ functions:
                 - Authorization
                 - X-Api-Key
                 - X-Amz-Security-Token
-                - jwthEADER
+                - jwtheader
               allowCredentials: true
           
 resources:
