@@ -32,6 +32,7 @@ const getPicksByWeek = require('../functions/getPicksByWeek/getPicksByWeek');
 const getUsers = require('../functions/getUsers/getUsers');
 const getUser = require('../functions/getUser/getUser');
 const getPayoutStructure = require('../functions/getPayoutStructure/getPayoutStructure');
+const getGamesByWeek = require('../functions/getGamesByWeek/getGamesByWeek');
 
 
 module.exports.tester = async () => { 
@@ -59,7 +60,7 @@ module.exports.tester = async () => {
   // return await dynamoScanAllRows('testTable', 'testTable');
   // return await cognitoGetAllUsers();
 
-
+  return await getGamesByWeek(1);
 
   ////
   // Load up fake picks for a few users
@@ -89,5 +90,5 @@ module.exports.tester = async () => {
   //     updateGameWinner(game.gameId, winner, Math.round(Math.random() * 25), Math.round(Math.random() * 25));
   //   }
   // }
-
 };
+

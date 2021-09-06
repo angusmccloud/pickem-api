@@ -62,7 +62,6 @@ module.exports.getStandings = async (event, context, callback) => {
     }
 };
 
-
 module.exports.getStandingsByWeek = async (event, context, callback) => {
     /** Immediate response for WarmUP plugin so things don't keep running */
     if (event.source === 'serverless-plugin-warmup') {

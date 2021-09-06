@@ -169,6 +169,25 @@ functions:
                 - X-Amz-Security-Token
                 - jwtheader
               allowCredentials: true
+  getGamesByWeek:
+    warmup: ${env:preWarm}
+    prewarm: ${env:preWarm}
+    handler: app/public/games.getGamesByWeek
+    description: List the Number of Games per Week
+    events:
+      - http:
+          path: games
+          method: get
+          cors:
+              origin: '*'
+              headers:
+                - Content-Type
+                - X-Amz-Date
+                - Authorization
+                - X-Api-Key
+                - X-Amz-Security-Token
+                - jwtheader
+              allowCredentials: true
   updateGame:
     warmup: ${env:preWarm}
     prewarm: ${env:preWarm}
