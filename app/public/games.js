@@ -19,7 +19,8 @@ module.exports.createGame = async (event, context, callback) => {
     console.log('-- Event --', event);
     const jwtToken = event.headers.jwtheader;
     console.log('-- About to Check UserId for Token', jwtToken);
-    const userId = await getUserId(jwtToken).userId;
+    const currentUser = await getUserId(jwtToken);
+    const userId = currentUser.userId;
     const requestBody = JSON.parse(event.body);
     const { seasonName, weekNumber, weekName, playoffFlag, guessPointsFlag, visitingTeamId, homeTeamId, mondayNightFlag, gameDateTime } = requestBody;
 
@@ -55,12 +56,10 @@ module.exports.createGame = async (event, context, callback) => {
     } else if (mondayNightFlag === undefined || typeof(mondayNightFlag) !== 'boolean') {
         anyErrors = true;
         errorsText = 'Invalid request parameters, must include mondayNightFlag';
+    } else if (!currentUser.admin) {
+        anyErrors = true;
+        errorsText = 'You do not have permission to create a game';
     }
-
-    ////
-    // TO-DO:
-    // Verify that userId has permission to create a game
-    ////
 
     if (anyErrors) {
         console.log('There are errors', errorsText);
@@ -109,7 +108,8 @@ module.exports.updateGame = async (event, context, callback) => {
     console.log('-- Event --', event);
     const jwtToken = event.headers.jwtheader;
     console.log('-- About to Check UserId for Token', jwtToken);
-    const userId = await getUserId(jwtToken).userId;
+    const currentUser = await getUserId(jwtToken);
+    const userId = currentUser.userId;
     const requestBody = JSON.parse(event.body);
     const gameId = event.pathParameters.gameId;
     const { weekNumber, weekName, guessPointsFlag, mondayNightFlag, gameDateTime } = requestBody;
@@ -137,12 +137,10 @@ module.exports.updateGame = async (event, context, callback) => {
     } else if (mondayNightFlag === undefined || typeof(mondayNightFlag) !== 'boolean') {
         anyErrors = true;
         errorsText = 'Invalid request parameters, must include mondayNightFlag';
+    } else if (!currentUser.admin) {
+        anyErrors = true;
+        errorsText = 'You do not have permission to update games';
     }
-
-    ////
-    // TO-DO:
-    // Verify that userId has permission to create a game
-    ////
 
     if (anyErrors) {
         console.log('There are errors', errorsText);
@@ -191,7 +189,8 @@ module.exports.setWinner = async (event, context, callback) => {
     console.log('-- Event --', event);
     const jwtToken = event.headers.jwtheader;
     console.log('-- About to Check UserId for Token', jwtToken);
-    const userId = await getUserId(jwtToken).userId;
+    const currentUser = await getUserId(jwtToken);
+    const userId = currentUser.userId;
     const requestBody = JSON.parse(event.body);
     const gameId = event.pathParameters.gameId;
     const { winningTeamId, homeTeamPoints, visitingTeamPoints } = requestBody;
@@ -213,12 +212,10 @@ module.exports.setWinner = async (event, context, callback) => {
     } else if (visitingTeamPoints === undefined || typeof(visitingTeamPoints) !== 'number') {
         anyErrors = true;
         errorsText = 'Invalid request parameters, must include visitingTeamPoints';
+    } else if (!currentUser.gameAdmin) {
+        anyErrors = true;
+        errorsText = 'You do not have permission to set game winners';
     }
-
-    ////
-    // TO-DO:
-    // Verify that userId has permission to Set Winner
-    ////
 
     if (anyErrors) {
         console.log('There are errors', errorsText);

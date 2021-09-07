@@ -132,7 +132,8 @@ module.exports.updateParticipant = async (event, context, callback) => {
     console.log('-- Event --', event);
     const jwtToken = event.headers.jwtheader;
     console.log('-- About to Check UserId for Token', jwtToken);
-    const userId = await getUserId(jwtToken).userId;
+    const currentUser = await getUserId(jwtToken);
+    const userId = currentUser.userId;
     const requestBody = JSON.parse(event.body);
     const passedUserId = event.pathParameters.userId;
     const { playingSeason, playingPlayoffs, paid } = requestBody;
@@ -155,11 +156,13 @@ module.exports.updateParticipant = async (event, context, callback) => {
     } else if (paid === undefined || typeof(paid) !== 'boolean') {
         anyErrors = true;
         errorsText = 'Invalid request parameters, must include paid';
+    } else if (!currentUser.admin) {
+        anyErrors = true;
+        errorsText = 'You do not have permission to update this user';
     }
 
     ////
     // TO-DO:
-    // Verify that userId has permission to Update Participants
     // Verify that passedUserId is Valid
     ////
 
