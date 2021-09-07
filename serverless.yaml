@@ -214,7 +214,7 @@ functions:
     description: Set Game Winner
     events:
       - http:
-          path: games/setWinner/{gameId}
+          path: games/set-winner/{gameId}
           method: put
           cors:
               origin: '*'
@@ -233,7 +233,7 @@ functions:
     description: Get Payout Structure
     events:
       - http:
-          path: rules/payoutStructure
+          path: rules/payout-structure
           method: get
           cors:
               origin: '*'
