@@ -14,7 +14,7 @@ const getPicksByWeek = async (leagueId, userId) => {
 
   const gamesPromise = dynamoScanAllRows(
     process.env.GAMES_TABLE, 
-    'gameId, mondayNightFlag, divisionFlag, guessPointsFlag, visitingTeamId, homeTeamId, playoffFlag, totalPoints, weekName, weekNumber, winningTeamId', 
+    'gameId, mondayNightFlag, divisionFlag, guessPointsFlag, visitingTeamId, homeTeamId, playoffFlag, totalPoints, weekName, weekNumber, winningTeamId, gameDateTime', 
     'seasonName = :seasonName',
     {':seasonName': matchingLeague.seasonName},
     'gameId');
@@ -37,13 +37,15 @@ const getPicksByWeek = async (leagueId, userId) => {
   const participant = await participantPromise;
 
   games.sort((a, b) => {
-    return a.weekNumber - b.weekNumber;
+    return a.weekNumber - b.weekNumber
+      || a.gameDateTime - b.gameDateTime;
   });
 
   const weeks = [];
-  for(let i = 0; i < games.length; i++) {
+  for (let i = 0; i < games.length; i++) {
     const game = games[i];
-    if(weeks.find(week => week.weekNumber === game.weekNumber) === undefined) {
+    const matchingWeek = weeks.find(week => week.weekNumber === game.weekNumber);
+    if (matchingWeek === undefined) {
       const weekGames = games.filter(g => g.weekNumber === game.weekNumber);
       let weekPicks = 0;
       for(let ii = 0; ii < weekGames.length; ii++) {
@@ -57,6 +59,8 @@ const getPicksByWeek = async (leagueId, userId) => {
         weekName: game.weekName,
         numberOfGames: weekGames.length,
         numberOfPicks: weekPicks,
+        minTime: weekGames[0].gameDateTime,
+        maxTime: weekGames[weekGames.length - 1].gameDateTime,
         pickingWeek: !game.playoffFlag || participant.playingPlayoffs,
       });
     }
