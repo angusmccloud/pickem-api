@@ -65,7 +65,9 @@ const getPicks = async (leagueId, weekNumber, userId, adminOverride) => {
       gameDateTime: game.gameDateTime,
       winningTeamId: game.winningTeamId,
       totalPoints: game.totalPoints,
-      showPicks: adminOverride ? true : timestamp > game.gameDateTime
+      showPicks: adminOverride ? true : timestamp > game.gameDateTime,
+      weekNumber: game.weekNumber,
+      weekName: game.weekName
     }
   })
 

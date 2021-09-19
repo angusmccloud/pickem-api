@@ -53,8 +53,8 @@ module.exports.tester = async () => {
   //   console.log(5
   // }
   // return await getStandings(1);
-  // return await getPicks(1, 1, undefined, true);
-  return await getPicksByWeek(1, '2ce7edd7-87aa-4638-9d9b-c9a4e77d5b84');
+  return await getPicks(1, 1, '2ce7edd7-87aa-4638-9d9b-c9a4e77d5b84', true);
+  // return await getPicksByWeek(1, '2ce7edd7-87aa-4638-9d9b-c9a4e77d5b84');
   // return await getUsers(1);
   // return await getUser(1, '980a0f9e-ede3-4d7b-a195-6367e68d3d40');
   // return await getPayoutStructure(2);
