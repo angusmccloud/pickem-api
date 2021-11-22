@@ -102,7 +102,7 @@ const getStandings = async (leagueId, weekNumber) => {
           if(toLower(game.weekName) === 'superbowl') {
             playoffStandings[standingsIndex].superbowlCorrect = playoffStandings[standingsIndex].superbowlCorrect +1;
           }
-        } else if (pick.pickedTeamId === game.visitingTeamId) {
+        } else if (game.winningTeamId !== undefined && game.winningTeamId !== null && game.winningTeamId > 0) {
           playoffStandings[standingsIndex].incorrect = playoffStandings[standingsIndex].incorrect +1; 
         }
         if(game.guessPointsFlag) {
@@ -119,7 +119,7 @@ const getStandings = async (leagueId, weekNumber) => {
           if(game.mondayNightFlag) {
             standings[standingsIndex].mnfCorrect = standings[standingsIndex].mnfCorrect +1;
           }
-        } else if (pick.pickedTeamId === game.visitingTeamId) {
+        } else if (game.winningTeamId !== undefined && game.winningTeamId !== null && game.winningTeamId > 0) {
           standings[standingsIndex].incorrect = standings[standingsIndex].incorrect +1; 
         }
         if(game.guessPointsFlag) {

@@ -46,14 +46,14 @@ module.exports.tester = async () => {
   // return await updateGameTime('093aee60-d85c-11eb-910f-1392b5a10712', 2, '2', true, true, dt.getTime());
   // return await updateGameWinner('093aee60-d85c-11eb-910f-1392b5a10712', 7, 15, 20);
   // return await updateParticipant('c22a77cd-afa2-4559-8469-79af4c01fe84', 1, true, false, true);
-  // return await setPick('6d0f0a9d-15e3-47e9-a956-82a50ea0401c', 1, '299760f9-8aa3-4508-9a53-cbb25774df37', 25, 0, true);
+  // return await setPick('14198a9d-787a-482a-9181-664215a9c424', 1, 'ce403b78-ce6e-40c7-92da-6700f63879ba', 11, 0, true);
   // 
   // 
   // for(let i = 0; i < 10; i++){
   //   console.log(5
   // }
-  // return await getStandings(1);
-  return await getPicks(1, 1, '2ce7edd7-87aa-4638-9d9b-c9a4e77d5b84', true);
+  return await getStandings(1);
+  // return await getPicks(1, 1, '2ce7edd7-87aa-4638-9d9b-c9a4e77d5b84', true);
   // return await getPicksByWeek(1, '2ce7edd7-87aa-4638-9d9b-c9a4e77d5b84');
   // return await getUsers(1);
   // return await getUser(1, '980a0f9e-ede3-4d7b-a195-6367e68d3d40');
