@@ -52,7 +52,8 @@ module.exports.tester = async () => {
   // for(let i = 0; i < 10; i++){
   //   console.log(5
   // }
-  return await getStandings(1);
+  // return await getStandings(1);
+  // return await getStandings(1, 5);
   // return await getPicks(1, 1, '2ce7edd7-87aa-4638-9d9b-c9a4e77d5b84', true);
   // return await getPicksByWeek(1, '2ce7edd7-87aa-4638-9d9b-c9a4e77d5b84');
   // return await getUsers(1);
@@ -92,5 +93,6 @@ module.exports.tester = async () => {
   //     updateGameWinner(game.gameId, winner, Math.round(Math.random() * 25), Math.round(Math.random() * 25));
   //   }
   // }
+
 };
 

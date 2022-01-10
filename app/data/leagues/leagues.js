@@ -49,48 +49,12 @@ const leagueInfo = () => {
     },
     {
       leagueId: 2,
-      seasonName: '2020',
+      seasonName: '2022',
       defaultLeague: false,
       leagueType: 'standard',
       payoutStructure: {
-        finalized: true,
+        finalized: false,
         weeklyPayout: 25,
-        regularSeason: [
-          {
-            rank: '1',
-            payout: 250
-          },
-          {
-            rank: '2',
-            payout: 200
-          },
-          {
-            rank: '3',
-            payout: 150
-          },
-          {
-            rank: '4-6',
-            payout: 50
-          }
-        ],
-        playoffs: [
-          {
-            rank: '1',
-            payout: 250
-          },
-          {
-            rank: '2',
-            payout: 200
-          },
-          {
-            rank: '3',
-            payout: 150
-          },
-          {
-            rank: '4',
-            payout: 100
-          }
-        ]
       },
     }
 ];
