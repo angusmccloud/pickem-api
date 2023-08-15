@@ -63,7 +63,7 @@ module.exports.tester = async () => {
   // return await dynamoScanAllRows('testTable', 'testTable');
   // return await cognitoGetAllUsers();
 
-  // return await getGamesByWeek(1);
+  return await getGamesByWeek(1);
 
   ////
   // Load up fake picks for a few users
@@ -94,5 +94,35 @@ module.exports.tester = async () => {
   //   }
   // }
 
+  // createGame('2021', 21, 'Conference Championship', true, true, 6, 14, false, 1643572800000);
+  // createGame('2021', 21, 'Conference Championship', true, true, 30, 32, false, 1643585400000);
+  // createGame('2021', 22, 'Superbowl', true, true, 32, 6, false, 1644795000000);
+
+
+  // await setPick('c22a77cd-afa2-4559-8469-79af4c01fe84', 2, '2f47b5cc-176d-41d7-8529-b25ee948b1b5', 1, 0, true);
+  // await setPick('292222bb-7aeb-4b3d-b0e9-926ce945f565', 2, '2f47b5cc-176d-41d7-8529-b25ee948b1b5', 1, 0, true);
+  // await setPick('7caca09a-93e9-4eb1-b40c-45aab7fb4e85', 2, '2f47b5cc-176d-41d7-8529-b25ee948b1b5', 1, 0, true);
+  // await setPick('7a78ff32-d5e5-43c7-8712-d67597933d5b', 2, '2f47b5cc-176d-41d7-8529-b25ee948b1b5', 1, 0, true);
+  // await setPick('031e3e8-e288-44e9-898f-6b8b927b0cc2', 2, '2f47b5cc-176d-41d7-8529-b25ee948b1b5', 1, 0, true);
+  // await setPick('1031e3e8-e288-44e9-898f-6b8b927b0cc2', 2, '2f47b5cc-176d-41d7-8529-b25ee948b1b5', 1, 0, true);
+
+  // await setPick('8b874838-005a-4d83-8c00-78227859fb47', 2, 'd5c85b09-a52d-4144-bc72-c77b1f5aade7', 29, 0, true);
+  // await setPick('8b874838-005a-4d83-8c00-78227859fb47', 2, '55bac94f-2bc1-47b1-bf07-129d46fd127f', 2, 0, true);
+  // await setPick('8b874838-005a-4d83-8c00-78227859fb47', 2, 'bdb59732-3320-4bc4-aac8-1f24f44eecd1', 19, 0, true);
+  // await setPick('8b874838-005a-4d83-8c00-78227859fb47', 2, '7da2cbe9-cf90-4725-a7cf-e21e128f096f', 4, 0, true);
+  // await setPick('8b874838-005a-4d83-8c00-78227859fb47', 2, '07b20e91-bf01-4559-9092-c9eb158bb5fd', 15, 0, true);
+  // await setPick('8b874838-005a-4d83-8c00-78227859fb47', 2, 'ca07eeb9-6f8e-4c8d-9304-6299414f9778', 17, 0, true);
+  // await setPick('8b874838-005a-4d83-8c00-78227859fb47', 2, '0ed9fed3-b6d2-4bba-aa53-d0982cdfe0d2', 27, 0, true);
+
+
+
+  // 14198a9d-787a-482a-9181-664215a9c424 = Keefe
+  // 8b673a7e-462c-4602-bbf5-30924b1bc0d2 = Britt
+  // 8b874838-005a-4d83-8c00-78227859fb47 = Michael perry
+
+//   createGame('2022', 20, 'Divisional', true, true, 11, 14, false, 1674336600000);
+// createGame('2022', 20, 'Divisional', true, true, 18, 19, false, 1674350100000);
+// createGame('2022', 20, 'Divisional', true, true, 6, 1, false, 1674417600000);
+// createGame('2022', 20, 'Divisional', true, true, 17, 30, false, 1674430200000);
 };
 

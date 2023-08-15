@@ -35,6 +35,9 @@ const createGame = (seasonName, weekNumber, weekName, playoffFlag, guessPointsFl
       updatedTime: timestamp,
     };
 
+    // console.log(JSON.stringify(gameObj));
+    // return gameObj;
+
     const created = dynamoCreateItem(
       process.env.GAMES_TABLE, 
       'gameId', 
