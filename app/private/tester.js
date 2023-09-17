@@ -38,6 +38,7 @@ const getGamesByWeek = require('../functions/getGamesByWeek/getGamesByWeek');
 module.exports.tester = async () => { 
   // const timestamp = new Date().getTime(); 
   // const leagues = await leagueInfo();
+  // return leagues;
   // console.log(leagues);
   // const teams = await teamsInfo();
   // console.log(teams);
@@ -52,11 +53,12 @@ module.exports.tester = async () => {
   // for(let i = 0; i < 10; i++){
   //   console.log(5
   // }
-  // return await getStandings(1);
+  return await getStandings(1);
   // return await getStandings(1, 5);
   // return await getPicks(1, 1, '2ce7edd7-87aa-4638-9d9b-c9a4e77d5b84', true);
   // return await getPicksByWeek(1, '2ce7edd7-87aa-4638-9d9b-c9a4e77d5b84');
   // return await getUsers(1);
+
   // return await getUser(1, '980a0f9e-ede3-4d7b-a195-6367e68d3d40');
   // return await getPayoutStructure(1);
 
@@ -65,34 +67,7 @@ module.exports.tester = async () => {
 
   // return await getGamesByWeek(1);
 
-  ////
-  // Load up fake picks for a few users
-  // Or to set fake winners
-  ////
-  // const fakeUsers = ['980a0f9e-ede3-4d7b-a195-6367e68d3d40', '2ce7edd7-87aa-4638-9d9b-c9a4e77d5b84', 'f7c41f90-ba10-4d86-a9b8-83520f4797e0']; // All Fake Teams
-  // // const fakeUsers = ['u1235', 'u1237']; // Fake Playoff Teams
-  // const minWeek = 1;
-  // const maxWeek = 18;
-  // for(let i = minWeek; i <= maxWeek; i++) {
-  //   const games = await dynamoScanAllRows(
-  //     process.env.GAMES_TABLE, 
-  //     'gameId, homeTeamId, visitingTeamId, guessPointsFlag', 
-  //     `seasonName = :seasonName AND weekNumber = :weekNumber`, 
-  //     {':seasonName': '2021', ':weekNumber': i}, 
-  //     'pickId');
-  //   for(let ii = 0; ii < games.length; ii++) {
-  //     const game = games[ii];
-  //     for(let u = 0; u < fakeUsers.length; u++) {
-  //       const userId = fakeUsers[u];
-  //       const guess = Math.round(Math.random() * 1) === 1 ? game.homeTeamId : game.visitingTeamId;
-  //       // Used to set fake picks
-  //       setPick(userId, 1, game.gameId, guess, Math.round(Math.random() * 45));
-  //     }
-  //     // Used to set fake winners
-  //     const winner = Math.round(Math.random() * 1) === 1 ? game.homeTeamId : game.visitingTeamId;
-  //     updateGameWinner(game.gameId, winner, Math.round(Math.random() * 25), Math.round(Math.random() * 25));
-  //   }
-  // }
+  // await setPick('dddd50a0-8593-4622-a725-abbcf41419b8', 3, 'cd8f693b-6ca9-41b3-9db0-1fc847259455', 14, 0, true); 
 
 };
 
