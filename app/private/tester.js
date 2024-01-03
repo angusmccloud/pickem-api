@@ -53,7 +53,7 @@ module.exports.tester = async () => {
   // for(let i = 0; i < 10; i++){
   //   console.log(5
   // }
-  return await getStandings(1);
+  // return await getStandings(1);
   // return await getStandings(1, 5);
   // return await getPicks(1, 1, '2ce7edd7-87aa-4638-9d9b-c9a4e77d5b84', true);
   // return await getPicksByWeek(1, '2ce7edd7-87aa-4638-9d9b-c9a4e77d5b84');
@@ -67,7 +67,8 @@ module.exports.tester = async () => {
 
   // return await getGamesByWeek(1);
 
-  // await setPick('dddd50a0-8593-4622-a725-abbcf41419b8', 3, 'cd8f693b-6ca9-41b3-9db0-1fc847259455', 14, 0, true); 
+  await setPick('8b874838-005a-4d83-8c00-78227859fb47', 3, 'f1d42473-2164-4d09-99b8-c033b0840228', 15, 0, true); 
+  await setPick('c09e2025-8f5b-4341-9195-1bd39b8f5888', 3, 'f1d42473-2164-4d09-99b8-c033b0840228', 15, 0, true); 
 
 };
 

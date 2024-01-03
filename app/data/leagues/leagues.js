@@ -95,10 +95,40 @@ const leagueInfo = () => {
       defaultLeague: true,
       leagueType: 'standard',
       payoutStructure: {
-        finalized: false,
+        finalized: true,
         weeklyPayout: 25,
-        regularSeason: [],
-        playoffs: []
+        regularSeason: [
+          {
+            rank: '1st',
+            payout: 300
+          },
+          {
+            rank: '2nd',
+            payout: 200
+          },
+          {
+            rank: '3rd',
+            payout: 100
+          },
+          {
+            rank: '4th',
+            payout: 50
+          }
+        ],
+        playoffs: [
+          {
+            rank: '1st',
+            payout: 325
+          },
+          {
+            rank: '2nd',
+            payout: 200
+          },
+          {
+            rank: '3rd',
+            payout: 125
+          },
+        ]
       },
     }
 ];

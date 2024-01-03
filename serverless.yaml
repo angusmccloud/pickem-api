@@ -1,21 +1,41 @@
 service: pickem
 
-frameworkVersion: ">=1.1.0 <2.0.0"
+frameworkVersion: "3"
 
 plugins:
   - serverless-plugin-warmup
-  - serverless-dotenv-plugin
+
+custom:
+  warmup:
+    default:
+      enabled: true
+      prewarm: true
+
+params:
+  default:
+    stage: dev
+    warmup: false
+    userPoolId: us-east-1_Biu0dPvx6
+  prod:
+    stage: prod
+    warmup: true
+    userPoolId: us-east-1_Biu0dPvx6
+  dev:
+    stage: dev
+    warmup: false
+    userPoolId: us-east-1_Biu0dPvx6
 
 provider:
   name: aws
-  runtime: nodejs14.x
-  stage: ${env:stage, 'dev'}
+  runtime: nodejs18.x
+  stage: prod # Setting from ENV not working for some reason...
+# stage: dev
   region: us-east-1
   environment:
-    PARTICIPANTS_TABLE: ${self:service}-${opt:stage, self:provider.stage}-participants
-    GAMES_TABLE: ${self:service}-${opt:stage, self:provider.stage}-games
-    PICKS_TABLE: ${self:service}-${opt:stage, self:provider.stage}-picks
-    USER_POOL_ID: ${env:userPoolId}
+    PARTICIPANTS_TABLE: ${self:service}-${param:stage}-participants
+    GAMES_TABLE: ${self:service}-${param:stage}-games
+    PICKS_TABLE: ${self:service}-${param:stage}-picks
+    USER_POOL_ID: ${param:userPoolId}
 
   iamRoleStatements:
     - Effect: Allow
@@ -37,8 +57,9 @@ functions:
     handler: app/private/tester.tester
     description: Used for testing functions
   getStandings:
-    warmup: ${env:preWarm}
-    prewarm: ${env:preWarm}
+    warmup:
+      default:
+        enabled: ${param:warmup}
     handler: app/public/standings.getStandings
     description: Regular Season Standings
     events:
@@ -56,8 +77,9 @@ functions:
                 - jwtheader
               allowCredentials: true
   getStandingsByWeek:
-    warmup: ${env:preWarm}
-    prewarm: ${env:preWarm}
+    warmup:
+      default:
+        enabled: ${param:warmup}
     handler: app/public/standings.getStandingsByWeek
     description: Standings by Week
     events:
@@ -75,8 +97,9 @@ functions:
                 - jwtheader
               allowCredentials: true
   getPicksOneWeekAllPlayers:
-    warmup: ${env:preWarm}
-    prewarm: ${env:preWarm}
+    warmup:
+      default:
+        enabled: ${param:warmup}
     handler: app/public/picks.getPicksByWeek
     description: All Players Picks, One Week
     events:
@@ -94,8 +117,9 @@ functions:
                 - jwtheader
               allowCredentials: true
   getPicksOneWeekOnePlayer:
-    warmup: ${env:preWarm}
-    prewarm: ${env:preWarm}
+    warmup:
+      default:
+        enabled: ${param:warmup}
     handler: app/public/picks.getPicksByWeekByPlayer
     description: One Player Picks, One Week
     events:
@@ -113,8 +137,9 @@ functions:
                 - jwtheader
               allowCredentials: true
   getPicksAllWeeksOnePlayer:
-    warmup: ${env:preWarm}
-    prewarm: ${env:preWarm}
+    warmup:
+      default:
+        enabled: ${param:warmup}
     handler: app/public/picks.getPicksByPlayer
     description: One Player Picks, All Weeks
     events:
@@ -132,8 +157,9 @@ functions:
                 - jwtheader
               allowCredentials: true
   setPick:
-    warmup: ${env:preWarm}
-    prewarm: ${env:preWarm}
+    warmup:
+      default:
+        enabled: ${param:warmup}
     handler: app/public/picks.updatePick
     description: Set pick for one week
     events:
@@ -151,8 +177,9 @@ functions:
                 - jwtheader
               allowCredentials: true
   createGame:
-    warmup: ${env:preWarm}
-    prewarm: ${env:preWarm}
+    warmup:
+      default:
+        enabled: ${param:warmup}
     handler: app/public/games.createGame
     description: Create Game
     events:
@@ -170,8 +197,9 @@ functions:
                 - jwtheader
               allowCredentials: true
   getGamesByWeek:
-    warmup: ${env:preWarm}
-    prewarm: ${env:preWarm}
+    warmup:
+      default:
+        enabled: ${param:warmup}
     handler: app/public/games.getGamesByWeek
     description: List the Number of Games per Week
     events:
@@ -189,8 +217,9 @@ functions:
                 - jwtheader
               allowCredentials: true
   updateGame:
-    warmup: ${env:preWarm}
-    prewarm: ${env:preWarm}
+    warmup:
+      default:
+        enabled: ${param:warmup}
     handler: app/public/games.updateGame
     description: Update Game
     events:
@@ -208,8 +237,9 @@ functions:
                 - jwtheader
               allowCredentials: true
   setWinner:
-    warmup: ${env:preWarm}
-    prewarm: ${env:preWarm}
+    warmup:
+      default:
+        enabled: ${param:warmup}
     handler: app/public/games.setWinner
     description: Set Game Winner
     events:
@@ -227,8 +257,9 @@ functions:
                 - jwtheader
               allowCredentials: true
   getPayoutStructure:
-    warmup: ${env:preWarm}
-    prewarm: ${env:preWarm}
+    warmup:
+      default:
+        enabled: ${param:warmup}
     handler: app/public/rules.getPayoutStructure
     description: Get Payout Structure
     events:
@@ -246,8 +277,9 @@ functions:
                 - jwtheader
               allowCredentials: true
   getCurrentParticipantStatus:
-    warmup: ${env:preWarm}
-    prewarm: ${env:preWarm}
+    warmup:
+      default:
+        enabled: ${param:warmup}
     handler: app/public/users.getSingleParticipant
     description: Get Info on Current Participant
     events:
@@ -265,8 +297,9 @@ functions:
                 - jwtheader
               allowCredentials: true
   getAllParticipants:
-    warmup: ${env:preWarm}
-    prewarm: ${env:preWarm}
+    warmup:
+      default:
+        enabled: ${param:warmup}
     handler: app/public/users.getAllParticipants
     description: Get All Participants
     events:
@@ -284,8 +317,9 @@ functions:
                 - jwtheader
               allowCredentials: true
   updateParticipant:
-    warmup: ${env:preWarm}
-    prewarm: ${env:preWarm}
+    warmup:
+      default:
+        enabled: ${param:warmup}
     handler: app/public/users.updateParticipant
     description: Update a Participant
     events:
