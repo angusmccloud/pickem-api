@@ -33,6 +33,7 @@ const getUsers = require('../functions/getUsers/getUsers');
 const getUser = require('../functions/getUser/getUser');
 const getPayoutStructure = require('../functions/getPayoutStructure/getPayoutStructure');
 const getGamesByWeek = require('../functions/getGamesByWeek/getGamesByWeek');
+const findDuplicatePicks = require('../functions/findDuplicatePicks/findDuplicatePicks');
 
 
 module.exports.tester = async () => { 
@@ -67,8 +68,20 @@ module.exports.tester = async () => {
 
   // return await getGamesByWeek(1);
 
-  await setPick('8b874838-005a-4d83-8c00-78227859fb47', 3, 'f1d42473-2164-4d09-99b8-c033b0840228', 15, 0, true); 
-  await setPick('c09e2025-8f5b-4341-9195-1bd39b8f5888', 3, 'f1d42473-2164-4d09-99b8-c033b0840228', 15, 0, true); 
+  // await setPick('8b874838-005a-4d83-8c00-78227859fb47', 3, 'f1d42473-2164-4d09-99b8-c033b0840228', 15, 0, true); 
+  // await setPick('c09e2025-8f5b-4341-9195-1bd39b8f5888', 3, 'f1d42473-2164-4d09-99b8-c033b0840228', 15, 0, true); 
+
+  // Run this to remove duplicate picks (NOTE: Change Season ID)
+  // return await findDuplicatePicks(3);
+
+  // Wild Card Weekend:
+  // createGame('2023', 19, 'wild card', true, true, 7, 10, false, 1705181400000);
+  // createGame('2023', 19, 'wild card', true, true, 2, 14, false, 1705194000000);
+  // createGame('2023', 19, 'wild card', true, true, 8, 1, false, 1705255200000);
+  // createGame('2023', 19, 'wild card', true, true, 23, 17, false, 1705267800000);
+  // createGame('2023', 19, 'wild card', true, true, 32, 22, false, 1705280400000);
+  // createGame('2023', 19, 'wild card', true, true, 19, 25, false, 1705367700000);
+
 
 };
 
