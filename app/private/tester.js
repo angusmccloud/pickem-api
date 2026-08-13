@@ -35,9 +35,17 @@ const getPayoutStructure = require('../functions/getPayoutStructure/getPayoutStr
 const getGamesByWeek = require('../functions/getGamesByWeek/getGamesByWeek');
 const findDuplicatePicks = require('../functions/findDuplicatePicks/findDuplicatePicks');
 const deleteGamesBySeason = require('../functions/deleteGamesBySeason/deleteGamesBySeason');
+const sendPickReminders = require('../functions/sendPickReminders/sendPickReminders');
 
 
-module.exports.tester = async () => { 
+module.exports.tester = async (event = {}) => {
+  // This function is warm-invoked every 5 minutes by serverless-plugin-warmup. Anything left
+  // uncommented below would otherwise run on every single ping -- including the deletes and
+  // the live email send. Bail on warmup pings before reaching any of it.
+  if(event.source === 'serverless-plugin-warmup') {
+    return 'Warmed';
+  }
+
   // const timestamp = new Date().getTime(); 
   // const leagues = await leagueInfo();
   // return leagues;
@@ -78,6 +86,18 @@ module.exports.tester = async () => {
   // calls below when deleting, otherwise this deletes and the reload runs in the same invoke.
   // return await deleteGamesBySeason(6, [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18]);
   // return await deleteGamesBySeason(6, [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18], false);
+
+  // Preview who is missing picks for games today/tomorrow (no emails sent).
+  // Runs against the default league. Pass false to actually send.
+  // return await sendPickReminders();
+  // return await sendPickReminders(false);
+
+  // Out-of-season testing. asOf pretends it's a real game day, onlyUserId keeps the send to one
+  // person so a test can never email the league. 2026-09-13 14:00Z = Sun Sept 13 10am ET,
+  // which puts 13 games in "today" and the Monday nighter in "tomorrow".
+  // Dry run first, then swap the false in to actually send:
+  // return await sendPickReminders(true,  { asOf: Date.parse('2026-09-13T14:00:00Z'), onlyUserId: '17432f6a-5442-480c-97a1-896172a0821f' });
+  // return await sendPickReminders(false, { asOf: Date.parse('2026-09-13T14:00:00Z'), onlyUserId: '17432f6a-5442-480c-97a1-896172a0821f' });
 
   // Brittni Keefe (2025)
   // return await setPick('8b673a7e-462c-4602-bbf5-30924b1bc0d2', 5, '8af4839c-2a10-4bdf-b147-1f197afb2717', 13, 0, true);
