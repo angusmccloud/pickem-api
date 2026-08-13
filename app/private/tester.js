@@ -34,6 +34,7 @@ const getUser = require('../functions/getUser/getUser');
 const getPayoutStructure = require('../functions/getPayoutStructure/getPayoutStructure');
 const getGamesByWeek = require('../functions/getGamesByWeek/getGamesByWeek');
 const findDuplicatePicks = require('../functions/findDuplicatePicks/findDuplicatePicks');
+const deleteGamesBySeason = require('../functions/deleteGamesBySeason/deleteGamesBySeason');
 
 
 module.exports.tester = async () => { 
@@ -68,19 +69,39 @@ module.exports.tester = async () => {
 
   // return await getGamesByWeek(1);
 
-  // await setPick('8b874838-005a-4d83-8c00-78227859fb47', 3, 'f1d42473-2164-4d09-99b8-c033b0840228', 15, 0, true); 
-  // await setPick('c09e2025-8f5b-4341-9195-1bd39b8f5888', 3, 'f1d42473-2164-4d09-99b8-c033b0840228', 15, 0, true); 
-
   // Run this to remove duplicate picks (NOTE: Change Season ID)
-  // return await findDuplicatePicks(3);
+  // return await findDuplicatePicks(6);
+
+  // Run this to delete a season's games so they can be reloaded (NOTE: Change Season ID)
+  // Args: (leagueId, weekNumbers = null, dryRun = true) -- weekNumbers null means the whole season.
+  // ALWAYS dry run first and check the count before passing false. Comment out the createGame
+  // calls below when deleting, otherwise this deletes and the reload runs in the same invoke.
+  // return await deleteGamesBySeason(6, [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18]);
+  // return await deleteGamesBySeason(6, [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18], false);
+
+  // Brittni Keefe (2025)
+  // return await setPick('8b673a7e-462c-4602-bbf5-30924b1bc0d2', 5, '8af4839c-2a10-4bdf-b147-1f197afb2717', 13, 0, true);
 
   // Wild Card Weekend:
-  // createGame('2023', 19, 'wild card', true, true, 7, 10, false, 1705181400000);
-  // createGame('2023', 19, 'wild card', true, true, 2, 14, false, 1705194000000);
-  // createGame('2023', 19, 'wild card', true, true, 8, 1, false, 1705255200000);
-  // createGame('2023', 19, 'wild card', true, true, 23, 17, false, 1705267800000);
-  // createGame('2023', 19, 'wild card', true, true, 32, 22, false, 1705280400000);
-  // createGame('2023', 19, 'wild card', true, true, 19, 25, false, 1705367700000);
+  // createGame('2025', 19, 'Wild Card', true, true, 32, 27, false, 1768080600000);
+  // createGame('2025', 19, 'Wild Card', true, true, 23, 21, false, 1768093200000);
+  // createGame('2025', 19, 'Wild Card', true, true, 1, 11, false, 1768068000000);
+  // createGame('2025', 19, 'Wild Card', true, true, 30, 19, false, 1768167000000);
+  // createGame('2025', 19, 'Wild Card', true, true, 16, 3, false, 1768179600000);
+  // createGame('2025', 19, 'Wild Card', true, true, 10, 8, true, 1768266900000);
+
+  // Divisional Weekend:
+  // createGame('2025', 20, 'Divisional', true, true, 1, 13, false, 1768685400000);
+  // createGame('2025', 20, 'Divisional', true, true, 30, 31, false, 1768698000000);
+  // createGame('2025', 20, 'Divisional', true, true, 10, 3, false, 1768766400000);
+  // createGame('2025', 20, 'Divisional', true, true, 32, 21, false, 1768779000000);
+
+  // Conference Championship
+  // createGame('2025', 21, 'Conference Championship', true, true, 3, 13, false, 1769371200000);
+  // createGame('2025', 21, 'Conference Championship', true, true, 32, 31, false, 1769383800000);
+
+  // Superbowl
+  // createGame('2025', 22, 'Superbowl', true, true, 3, 31, false, 1770593400000);
 
 
 };
