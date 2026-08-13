@@ -92,7 +92,7 @@ const leagueInfo = () => {
     {
       leagueId: 3,
       seasonName: '2023',
-      defaultLeague: true,
+      defaultLeague: false,
       leagueType: 'standard',
       payoutStructure: {
         finalized: true,
@@ -130,7 +130,111 @@ const leagueInfo = () => {
           },
         ]
       },
-    }
+    },
+    {
+      leagueId: 4,
+      seasonName: '2024',
+      defaultLeague: false,
+      leagueType: 'standard',
+      payoutStructure: {
+        finalized: true,
+        weeklyPayout: 25,
+        regularSeason: [
+          {
+            rank: '1st',
+            payout: 350
+          },
+          {
+            rank: '2nd',
+            payout: 200
+          },
+          {
+            rank: '3rd',
+            payout: 125
+          },
+          {
+            rank: '4th',
+            payout: 50
+          }
+        ],
+        playoffs: [
+          {
+            rank: '1st',
+            payout: 350
+          },
+          {
+            rank: '2nd',
+            payout: 200
+          },
+          {
+            rank: '3rd',
+            payout: 125
+          },
+          {
+            rank: '4th',
+            payout: 50
+          },
+        ]
+      },
+    },
+    {
+      leagueId: 5,
+      seasonName: '2025',
+      defaultLeague: false,
+      leagueType: 'standard',
+      payoutStructure: {
+        finalized: true,
+        weeklyPayout: 25,
+        regularSeason: [
+          {
+            rank: '1st',
+            payout: 350
+          },
+          {
+            rank: '2nd',
+            payout: 200
+          },
+          {
+            rank: '3rd',
+            payout: 150
+          },
+          {
+            rank: '4th',
+            payout: 75
+          }
+        ],
+        playoffs: [
+          {
+            rank: '1st',
+            payout: 350
+          },
+          {
+            rank: '2nd',
+            payout: 200
+          },
+          {
+            rank: '3rd',
+            payout: 150
+          },
+          {
+            rank: '4th',
+            payout: 75
+          }
+        ]
+      },
+    },
+    {
+      leagueId: 6,
+      seasonName: '2026',
+      defaultLeague: true,
+      leagueType: 'standard',
+      payoutStructure: {
+        finalized: false,
+        weeklyPayout: 25,
+        regularSeason: [],
+        playoffs: []
+      },
+    },
 ];
 
   const defaultLeague = leagues.find(league => league.defaultLeague);

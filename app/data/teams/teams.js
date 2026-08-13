@@ -19,7 +19,7 @@ const teamsInfo = () => {
     { teamId: 17, cityName: 'Dallas', divisionName: 'NFC East', teamName: 'Cowboys', imageUrl: 'https://pickem-teamlogos.s3.amazonaws.com/cowboys.png' },
     { teamId: 18, cityName: 'New York', divisionName: 'NFC East', teamName: 'Giants', imageUrl: 'https://pickem-teamlogos.s3.amazonaws.com/giants.png' },
     { teamId: 19, cityName: 'Philadelphia', divisionName: 'NFC East', teamName: 'Eagles', imageUrl: 'https://pickem-teamlogos.s3.amazonaws.com/eagles.png' },
-    { teamId: 20, cityName: 'Washington', divisionName: 'NFC East', teamName: 'Football Team', imageUrl: 'https://pickem-teamlogos.s3.amazonaws.com/wft.png' },
+    { teamId: 20, cityName: 'Washington', divisionName: 'NFC East', teamName: 'Commanders', imageUrl: 'https://pickem-teamlogos.s3.amazonaws.com/wft.png' },
     { teamId: 21, cityName: 'Chicago', divisionName: 'NFC North', teamName: 'Bears', imageUrl: 'https://pickem-teamlogos.s3.amazonaws.com/bears.png' },
     { teamId: 22, cityName: 'Detroit', divisionName: 'NFC North', teamName: 'Lions', imageUrl: 'https://pickem-teamlogos.s3.amazonaws.com/lions.png' },
     { teamId: 23, cityName: 'Green Bay', divisionName: 'NFC North', teamName: 'Packers', imageUrl: 'https://pickem-teamlogos.s3.amazonaws.com/packers.png' },

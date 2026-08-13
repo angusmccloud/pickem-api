@@ -33,9 +33,19 @@ const getUsers = require('../functions/getUsers/getUsers');
 const getUser = require('../functions/getUser/getUser');
 const getPayoutStructure = require('../functions/getPayoutStructure/getPayoutStructure');
 const getGamesByWeek = require('../functions/getGamesByWeek/getGamesByWeek');
+const findDuplicatePicks = require('../functions/findDuplicatePicks/findDuplicatePicks');
+const deleteGamesBySeason = require('../functions/deleteGamesBySeason/deleteGamesBySeason');
+const sendPickReminders = require('../functions/sendPickReminders/sendPickReminders');
 
 
-module.exports.tester = async () => { 
+module.exports.tester = async (event = {}) => {
+  // This function is warm-invoked every 5 minutes by serverless-plugin-warmup. Anything left
+  // uncommented below would otherwise run on every single ping -- including the deletes and
+  // the live email send. Bail on warmup pings before reaching any of it.
+  if(event.source === 'serverless-plugin-warmup') {
+    return 'Warmed';
+  }
+
   // const timestamp = new Date().getTime(); 
   // const leagues = await leagueInfo();
   // return leagues;
@@ -67,8 +77,52 @@ module.exports.tester = async () => {
 
   // return await getGamesByWeek(1);
 
-  await setPick('8b874838-005a-4d83-8c00-78227859fb47', 3, 'f1d42473-2164-4d09-99b8-c033b0840228', 15, 0, true); 
-  await setPick('c09e2025-8f5b-4341-9195-1bd39b8f5888', 3, 'f1d42473-2164-4d09-99b8-c033b0840228', 15, 0, true); 
+  // Run this to remove duplicate picks (NOTE: Change Season ID)
+  // return await findDuplicatePicks(6);
+
+  // Run this to delete a season's games so they can be reloaded (NOTE: Change Season ID)
+  // Args: (leagueId, weekNumbers = null, dryRun = true) -- weekNumbers null means the whole season.
+  // ALWAYS dry run first and check the count before passing false. Comment out the createGame
+  // calls below when deleting, otherwise this deletes and the reload runs in the same invoke.
+  // return await deleteGamesBySeason(6, [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18]);
+  // return await deleteGamesBySeason(6, [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18], false);
+
+  // Preview who is missing picks for games today/tomorrow (no emails sent).
+  // Runs against the default league. Pass false to actually send.
+  // return await sendPickReminders();
+  // return await sendPickReminders(false);
+
+  // Out-of-season testing. asOf pretends it's a real game day, onlyUserId keeps the send to one
+  // person so a test can never email the league. 2026-09-13 14:00Z = Sun Sept 13 10am ET,
+  // which puts 13 games in "today" and the Monday nighter in "tomorrow".
+  // Dry run first, then swap the false in to actually send:
+  // return await sendPickReminders(true,  { asOf: Date.parse('2026-09-13T14:00:00Z'), onlyUserId: '17432f6a-5442-480c-97a1-896172a0821f' });
+  // return await sendPickReminders(false, { asOf: Date.parse('2026-09-13T14:00:00Z'), onlyUserId: '17432f6a-5442-480c-97a1-896172a0821f' });
+
+  // Brittni Keefe (2025)
+  // return await setPick('8b673a7e-462c-4602-bbf5-30924b1bc0d2', 5, '8af4839c-2a10-4bdf-b147-1f197afb2717', 13, 0, true);
+
+  // Wild Card Weekend:
+  // createGame('2025', 19, 'Wild Card', true, true, 32, 27, false, 1768080600000);
+  // createGame('2025', 19, 'Wild Card', true, true, 23, 21, false, 1768093200000);
+  // createGame('2025', 19, 'Wild Card', true, true, 1, 11, false, 1768068000000);
+  // createGame('2025', 19, 'Wild Card', true, true, 30, 19, false, 1768167000000);
+  // createGame('2025', 19, 'Wild Card', true, true, 16, 3, false, 1768179600000);
+  // createGame('2025', 19, 'Wild Card', true, true, 10, 8, true, 1768266900000);
+
+  // Divisional Weekend:
+  // createGame('2025', 20, 'Divisional', true, true, 1, 13, false, 1768685400000);
+  // createGame('2025', 20, 'Divisional', true, true, 30, 31, false, 1768698000000);
+  // createGame('2025', 20, 'Divisional', true, true, 10, 3, false, 1768766400000);
+  // createGame('2025', 20, 'Divisional', true, true, 32, 21, false, 1768779000000);
+
+  // Conference Championship
+  // createGame('2025', 21, 'Conference Championship', true, true, 3, 13, false, 1769371200000);
+  // createGame('2025', 21, 'Conference Championship', true, true, 32, 31, false, 1769383800000);
+
+  // Superbowl
+  // createGame('2025', 22, 'Superbowl', true, true, 3, 31, false, 1770593400000);
+
 
 };
 

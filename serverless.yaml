@@ -16,14 +16,26 @@ params:
     stage: dev
     warmup: false
     userPoolId: us-east-1_Biu0dPvx6
+    # nflpickgames.com is a DKIM-verified SES domain identity in us-east-1, so any local part
+    # works here without a real mailbox behind it. This one is unmonitored by design -- the
+    # email body says so, and Connor is CC'd on every reminder so replies have somewhere to go.
+    reminderFromEmail: reminders@nflpickgames.com
+    reminderFromName: PickEm Reminders
+    reminderCcEmail: connort@gmail.com
   prod:
     stage: prod
     warmup: true
     userPoolId: us-east-1_Biu0dPvx6
+    reminderFromEmail: reminders@nflpickgames.com
+    reminderFromName: PickEm Reminders
+    reminderCcEmail: connort@gmail.com
   dev:
     stage: dev
     warmup: false
     userPoolId: us-east-1_Biu0dPvx6
+    reminderFromEmail: reminders@nflpickgames.com
+    reminderFromName: PickEm Reminders
+    reminderCcEmail: connort@gmail.com
 
 provider:
   name: aws
@@ -36,6 +48,11 @@ provider:
     GAMES_TABLE: ${self:service}-${param:stage}-games
     PICKS_TABLE: ${self:service}-${param:stage}-picks
     USER_POOL_ID: ${param:userPoolId}
+    REMINDER_FROM_EMAIL: ${param:reminderFromEmail}
+    REMINDER_FROM_NAME: ${param:reminderFromName}
+    REMINDER_CC_EMAIL: ${param:reminderCcEmail}
+    REMINDER_TIMEZONE: America/New_York
+    SITE_URL: https://nflpickgames.com/
 
   iamRoleStatements:
     - Effect: Allow
@@ -48,6 +65,8 @@ provider:
         - dynamodb:PutItem
         - cognito-idp:ListUsers
         - lambda:InvokeFunction
+        - ses:SendEmail
+        - ses:SendRawEmail
         - "sqs:SendMessage"
         - "sqs:GetQueueUrl"
       Resource: "*"
@@ -56,6 +75,29 @@ functions:
   testerFunction:
     handler: app/private/tester.tester
     description: Used for testing functions
+    # Not frontend-facing, so a cold start is fine. Warmup also meant every uncommented line in
+    # tester.js ran every 5 minutes in prod.
+    warmup:
+      default:
+        enabled: false
+  sendPickReminders:
+    handler: app/private/reminders.sendPickReminders
+    description: Email participants who are missing picks for games today or tomorrow
+    timeout: 300
+    # custom.warmup.default.enabled is true, which opts in every function unless it says otherwise.
+    # This one must stay out: a warmup ping during the 10am hour would send real emails.
+    warmup:
+      default:
+        enabled: false
+    # Two schedules so one always lands on 10am ET across the DST change. The handler exits
+    # immediately on whichever invoke isn't 10am local, so only one does work per day.
+    events:
+      - schedule:
+          rate: cron(0 14 * * ? *)
+          description: Pick reminders - 10am EDT
+      - schedule:
+          rate: cron(0 15 * * ? *)
+          description: Pick reminders - 10am EST
   getStandings:
     warmup:
       default:
