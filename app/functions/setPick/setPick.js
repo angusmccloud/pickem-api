@@ -6,53 +6,58 @@ const dynamoUpdateItem = require('../../utils/dynamoUpdateItem');
 const dynamoFetchSingleItem = require('../../utils/dynamoFetchSingleItem');
 const dynamoScanAllRows = require('../../utils/dynamoScanAllRows');
 
+// Validation problems used to come back as bare strings, which the HTTP handler happily wrapped in
+// { success: true } -- so "This game has already started" reached the browser as a saved pick.
+// Returning a tagged object lets the caller tell a rejection from a write.
+const rejected = (message) => ({ success: false, message });
+
 const setPick = async (userId, leagueId, gameId, pickedTeamId, totalPoints = 0, adminOverride = false) => {
-  const timestamp = new Date().getTime(); 
+  const timestamp = new Date().getTime();
   const leagues = await leagueInfo().allLeagues;
   const matchingLeague = leagues.find(league => league.leagueId === leagueId);
   console.log(matchingLeague);
   if(matchingLeague === undefined) {
-    return 'Invalid League ID';
+    return rejected('Invalid League ID');
   }
 
   const existingParticipant = await dynamoFetchSingleItem(process.env.PARTICIPANTS_TABLE, 'participantId', `${leagueId}-${userId}`);
   if(existingParticipant === undefined) {
-    return 'Invalid User ID & League ID combo';
+    return rejected('Invalid User ID & League ID combo');
   }
 
   const gameInfo = await dynamoFetchSingleItem(process.env.GAMES_TABLE, 'gameId', gameId);
   if(gameInfo === undefined) {
-    return 'Invalid Game ID';
+    return rejected('Invalid Game ID');
   }
 
   if(matchingLeague.seasonName !== gameInfo.seasonName) {
-    return 'leagueId and gameId are from different seasons';
+    return rejected('leagueId and gameId are from different seasons');
   }
 
   if(gameInfo.playoffFlag && !existingParticipant.playingPlayoffs) {
-    return 'This user isn\'t in the playoffs';
+    return rejected('This user isn\'t in the playoffs');
   }
 
   if(!gameInfo.playoffFlag && !existingParticipant.playingSeason) {
-    return 'This user isn\'t in the league this year';
+    return rejected('This user isn\'t in the league this year');
   }
 
   if(gameInfo.gameDateTime <= timestamp && !adminOverride) {
-    return 'This game has already started';
+    return rejected('This game has already started');
   }
 
   if(pickedTeamId !== gameInfo.homeTeamId && pickedTeamId !== gameInfo.visitingTeamId) {
-    return 'pickedTeamId isn\'t playing in that gameId';
+    return rejected('pickedTeamId isn\'t playing in that gameId');
   }
 
   // Ok, seems to be a valid game...
   const existingPick = await dynamoScanAllRows(
-    process.env.PICKS_TABLE, 
-    'pickId', 
-    `userId = :userId AND gameId = :gameId`, 
-    {':userId': userId, ':gameId': gameId}, 
+    process.env.PICKS_TABLE,
+    'pickId',
+    `userId = :userId AND gameId = :gameId`,
+    {':userId': userId, ':gameId': gameId},
     'pickId');
-  
+
   if(existingPick.length === 0) {
     // Hasn't made this pick before, create record
     const pickObj = {
@@ -67,13 +72,13 @@ const setPick = async (userId, leagueId, gameId, pickedTeamId, totalPoints = 0, 
       updatedTime: timestamp,
     };
 
-    const created = dynamoCreateItem(
-      process.env.PICKS_TABLE, 
-      'pickId', 
+    const pickId = await dynamoCreateItem(
+      process.env.PICKS_TABLE,
+      'pickId',
       pickObj
     );
-  
-    return created;
+
+    return { success: true, pickId, created: true };
   } else {
     // Update existing pick
     const updatedValues = [
@@ -87,8 +92,8 @@ const setPick = async (userId, leagueId, gameId, pickedTeamId, totalPoints = 0, 
       }
     ];
 
-    const result = await dynamoUpdateItem(process.env.PICKS_TABLE, 'pickId', existingPick[0].pickId, updatedValues);
-    return result;
+    await dynamoUpdateItem(process.env.PICKS_TABLE, 'pickId', existingPick[0].pickId, updatedValues);
+    return { success: true, pickId: existingPick[0].pickId, created: false };
   }
 };
 

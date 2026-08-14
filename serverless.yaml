@@ -16,6 +16,12 @@ params:
     stage: dev
     warmup: false
     userPoolId: us-east-1_Biu0dPvx6
+    # The React app's Cognito app client (Amplify calls it webClientId). Tokens are verified against
+    # this, so one minted for another client -- or another pool entirely -- is rejected rather than
+    # trusted. Amplify also created a nativeClientId (6g7g2o2mlkmej307gsoa2m8h2u) that nothing uses;
+    # it's deliberately left out. If a mobile app ever ships, add it as a comma-separated value and
+    # pass an array to CognitoJwtVerifier.create.
+    userPoolClientId: 7u3h401u9ett3ers014i7j62pk
     # nflpickgames.com is a DKIM-verified SES domain identity in us-east-1, so any local part
     # works here without a real mailbox behind it. This one is unmonitored by design -- the
     # email body says so, and Connor is CC'd on every reminder so replies have somewhere to go.
@@ -26,6 +32,7 @@ params:
     stage: prod
     warmup: true
     userPoolId: us-east-1_Biu0dPvx6
+    userPoolClientId: 7u3h401u9ett3ers014i7j62pk
     reminderFromEmail: reminders@nflpickgames.com
     reminderFromName: PickEm Reminders
     reminderCcEmail: connort@gmail.com
@@ -33,13 +40,24 @@ params:
     stage: dev
     warmup: false
     userPoolId: us-east-1_Biu0dPvx6
+    userPoolClientId: 7u3h401u9ett3ers014i7j62pk
     reminderFromEmail: reminders@nflpickgames.com
     reminderFromName: PickEm Reminders
     reminderCcEmail: connort@gmail.com
 
 provider:
   name: aws
-  runtime: nodejs18.x
+  # Was nodejs18.x, which is past AWS security support.
+  #
+  # Do NOT raise this to nodejs24.x until the handlers are converted: Lambda removed support for
+  # callback-based handlers in Node.js 24, and every handler in app/public and app/private still uses
+  # the (event, context, callback) signature. On 24 they all fail at init with
+  # Runtime.CallbackHandlerDeprecated, which surfaces as a 502 on every endpoint.
+  #
+  # 22 is fine otherwise: aws-sdk v2 is bundled rather than taken from the runtime (Node 18+ runtimes
+  # only ship SDK v3), and aws-sdk v2 + bluebird were confirmed making real DynamoDB and Cognito calls
+  # on Node 24 locally.
+  runtime: nodejs22.x
   stage: prod # Setting from ENV not working for some reason...
 # stage: dev
   region: us-east-1
@@ -48,6 +66,7 @@ provider:
     GAMES_TABLE: ${self:service}-${param:stage}-games
     PICKS_TABLE: ${self:service}-${param:stage}-picks
     USER_POOL_ID: ${param:userPoolId}
+    USER_POOL_CLIENT_ID: ${param:userPoolClientId}
     REMINDER_FROM_EMAIL: ${param:reminderFromEmail}
     REMINDER_FROM_NAME: ${param:reminderFromName}
     REMINDER_CC_EMAIL: ${param:reminderCcEmail}
@@ -207,6 +226,48 @@ functions:
     events:
       - http:
           path: picks
+          method: put
+          cors:
+              origin: '*'
+              headers:
+                - Content-Type
+                - X-Amz-Date
+                - Authorization
+                - X-Api-Key
+                - X-Amz-Security-Token
+                - jwtheader
+              allowCredentials: true
+  # Admin-only. Paths are /picks/user/... rather than /picks/{userId}/... so they can't be confused
+  # with the existing /picks/{weekNumber} and /picks/all/{weekNumber} routes.
+  getPicksOneWeekForPlayer:
+    warmup:
+      default:
+        enabled: ${param:warmup}
+    handler: app/public/picks.getPicksByWeekForPlayer
+    description: Admin - One Player Picks, One Week
+    events:
+      - http:
+          path: picks/user/{userId}/{weekNumber}
+          method: get
+          cors:
+              origin: '*'
+              headers:
+                - Content-Type
+                - X-Amz-Date
+                - Authorization
+                - X-Api-Key
+                - X-Amz-Security-Token
+                - jwtheader
+              allowCredentials: true
+  setPickForPlayer:
+    warmup:
+      default:
+        enabled: ${param:warmup}
+    handler: app/public/picks.updatePickForPlayer
+    description: Admin - Set pick for another player, ignoring kickoff time
+    events:
+      - http:
+          path: picks/user/{userId}
           method: put
           cors:
               origin: '*'

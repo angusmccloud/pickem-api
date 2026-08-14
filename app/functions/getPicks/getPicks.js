@@ -50,6 +50,16 @@ const getPicks = async (leagueId, weekNumber, userId, adminOverride) => {
   const games = await gamesPromise;
   const picks = await picksPromise;
   const participants = await participantsPromise;
+
+  // A week with no games used to blow up on games[0] below and surface as a 502. Now that a week
+  // number can come straight off a URL an admin typed, answer with an empty week instead.
+  if(games.length === 0) {
+    return {
+      games: [],
+      picks: []
+    };
+  }
+
   const playoffParticipants = participants.filter(participant => {
     return participant.playingPlayoffs
   });
@@ -90,7 +100,9 @@ const getPicks = async (leagueId, weekNumber, userId, adminOverride) => {
     picksResult.push({
       user: {
         userId: thisUserId,
-        username: user.username,
+        // cognitoGetAllUsers() skips disabled accounts, so a participant row can outlive its Cognito
+        // user. Reading .username off the resulting undefined took the whole request down.
+        username: user ? user.username : '(unknown user)',
       },
       picks: thisUserPicksResult
     });

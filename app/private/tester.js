@@ -5,8 +5,6 @@ AWS.config.setPromisesDependency(require('bluebird'));
 const dynamoDb = new AWS.DynamoDB.DocumentClient();
 const cognitoidentityserviceprovider = new AWS.CognitoIdentityServiceProvider();
 
-const jwt = require('jsonwebtoken');
-
 // Base Dynamo Functions
 const dynamoScanAllRows = require('../utils/dynamoScanAllRows');
 const dynamoFetchSingleItem = require('../utils/dynamoFetchSingleItem');
@@ -15,7 +13,6 @@ const dynamoCreateItem = require('../utils/dynamoCreateItem');
 const dynamoUpdateItem = require('../utils/dynamoUpdateItem');
 
 // Utils
-const getUserId = require('../utils/getUserId/getUserId');
 const leagueInfo = require('../data/leagues/leagues');
 const teamsInfo = require('../data/teams/teams');
 const cognitoGetAllUsers = require('../utils/cognitoGetAllUsers/cognitoGetAllUsers');
