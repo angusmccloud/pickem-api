@@ -141,7 +141,6 @@ const sendPickReminders = async (dryRun = true, options = {}) => {
     };
   }
 
-  const ccAddresses = process.env.REMINDER_CC_EMAIL ? [process.env.REMINDER_CC_EMAIL] : [];
   const sent = [];
 
   for(let i = 0; i < reminders.length; i++) {
@@ -150,8 +149,7 @@ const sendPickReminders = async (dryRun = true, options = {}) => {
       reminder.email,
       SUBJECT,
       buildHtmlBody(reminder),
-      buildTextBody(reminder),
-      ccAddresses
+      buildTextBody(reminder)
     );
     sent.push({ email: reminder.email, missingCount: reminder.missingCount, messageId });
   }

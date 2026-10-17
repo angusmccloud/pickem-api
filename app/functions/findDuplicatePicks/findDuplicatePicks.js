@@ -4,10 +4,13 @@ const dynamoScanAllRows = require('../../utils/dynamoScanAllRows');
 const dynamoFetchSingleItem = require('../../utils/dynamoFetchSingleItem');
 const dynamoDeleteSingleItem = require('../../utils/dynamoDeleteSingleItem');
 
+// leagueId is optional -- omitted, it runs against the current (default) league, which is what the
+// daily schedule does so it never needs updating for a new season.
 const findDuplicatePicks = async (leagueId) => {
-  const timestamp = new Date().getTime(); 
-  const leagues = await leagueInfo().allLeagues;
-  const matchingLeague = leagues.find(league => league.leagueId === leagueId);
+  const { allLeagues, defaultLeague } = leagueInfo();
+  const matchingLeague = leagueId === undefined
+    ? defaultLeague
+    : allLeagues.find(league => league.leagueId === leagueId);
 
   if(matchingLeague === undefined) {
     return 'Invalid League ID';
