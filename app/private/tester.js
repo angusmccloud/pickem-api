@@ -75,7 +75,7 @@ module.exports.tester = async (event = {}) => {
   // return await getGamesByWeek(1);
 
   // Run this to remove duplicate picks (NOTE: Change Season ID)
-  // return await findDuplicatePicks(6);
+  return await findDuplicatePicks(6);
 
   // Run this to delete a season's games so they can be reloaded (NOTE: Change Season ID)
   // Args: (leagueId, weekNumbers = null, dryRun = true) -- weekNumbers null means the whole season.

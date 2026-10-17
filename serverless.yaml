@@ -24,10 +24,9 @@ params:
     userPoolClientId: 7u3h401u9ett3ers014i7j62pk
     # nflpickgames.com is a DKIM-verified SES domain identity in us-east-1, so any local part
     # works here without a real mailbox behind it. This one is unmonitored by design -- the
-    # email body says so, and Connor is CC'd on every reminder so replies have somewhere to go.
+    # email body says so and points people to Connor instead.
     reminderFromEmail: reminders@nflpickgames.com
     reminderFromName: PickEm Reminders
-    reminderCcEmail: connort@gmail.com
   prod:
     stage: prod
     warmup: true
@@ -35,7 +34,6 @@ params:
     userPoolClientId: 7u3h401u9ett3ers014i7j62pk
     reminderFromEmail: reminders@nflpickgames.com
     reminderFromName: PickEm Reminders
-    reminderCcEmail: connort@gmail.com
   dev:
     stage: dev
     warmup: false
@@ -43,7 +41,6 @@ params:
     userPoolClientId: 7u3h401u9ett3ers014i7j62pk
     reminderFromEmail: reminders@nflpickgames.com
     reminderFromName: PickEm Reminders
-    reminderCcEmail: connort@gmail.com
 
 provider:
   name: aws
@@ -69,7 +66,6 @@ provider:
     USER_POOL_CLIENT_ID: ${param:userPoolClientId}
     REMINDER_FROM_EMAIL: ${param:reminderFromEmail}
     REMINDER_FROM_NAME: ${param:reminderFromName}
-    REMINDER_CC_EMAIL: ${param:reminderCcEmail}
     REMINDER_TIMEZONE: America/New_York
     SITE_URL: https://nflpickgames.com/
 
@@ -117,6 +113,20 @@ functions:
       - schedule:
           rate: cron(0 15 * * ? *)
           description: Pick reminders - 10am EST
+  removeDuplicatePicks:
+    handler: app/private/duplicatePicks.removeDuplicatePicks
+    description: Delete duplicate picks for the current season, keeping the most recent
+    timeout: 300
+    # Deletes rows, so keep warmup pings from triggering a run every 5 minutes.
+    warmup:
+      default:
+        enabled: false
+    # 08:00 UTC is 3-4am ET -- after Sunday/Monday night games, before anyone is picking. The exact
+    # hour doesn't matter, so no DST double-schedule like the reminders.
+    events:
+      - schedule:
+          rate: cron(0 8 * * ? *)
+          description: Remove duplicate picks - daily
   getStandings:
     warmup:
       default:
